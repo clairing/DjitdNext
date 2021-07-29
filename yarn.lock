@@ -1086,6 +1086,20 @@
   resolved "https://registry.npmjs.org/@ctrl/tinycolor/-/tinycolor-3.4.0.tgz#c3c5ae543c897caa9c2a68630bed355be5f9990f"
   integrity sha512-JZButFdZ1+/xAfpguQHoabIXkcqRRKpMrWKBkpEZZyxfY9C1DpADFB8PEqGSTeFr135SaTRfKqGKx5xSCLI7ZQ==
 
+"@devexpress/utils@1.3":
+  version "1.3.10"
+  resolved "https://registry.nlark.com/@devexpress/utils/download/@devexpress/utils-1.3.10.tgz#f8225ee31ef0bc1bc150da70df0ae905ed43af0e"
+  integrity sha1-+CJe4x7wvBvBUNpw3wrpBe1Drw4=
+  dependencies:
+    tslib "2.0.1"
+
+"@devexpress/utils@1.3.2":
+  version "1.3.2"
+  resolved "https://registry.nlark.com/@devexpress/utils/download/@devexpress/utils-1.3.2.tgz#2464d1ec5bba7ccc373a3212e8a30d28be855763"
+  integrity sha1-JGTR7Fu6fMw3OjIS6KMNKL6FV2M=
+  dependencies:
+    tslib "2.0.1"
+
 "@emmetio/abbreviation@^2.2.2":
   version "2.2.2"
   resolved "https://registry.npmjs.org/@emmetio/abbreviation/-/abbreviation-2.2.2.tgz#746762fd9e7a8c2ea604f580c62e3cfe250e6989"
@@ -3790,10 +3804,10 @@ core-js@^3.12.1:
   resolved "https://registry.npmjs.org/core-js/-/core-js-3.14.0.tgz#62322b98c71cc2018b027971a69419e2425c2a6c"
   integrity sha512-3s+ed8er9ahK+zJpp9ZtuVcDoFzHNiZsPbNAAE4KXgrRHbjSqqNN6xGSXq6bq7TZIbKj4NLrLb6bJ5i+vSVjHA==
 
-core-js@^3.15.2:
+core-js@^3.15.2, core-js@^3.6.5:
   version "3.15.2"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.15.2.tgz#740660d2ff55ef34ce664d7e2455119c5bdd3d61"
-  integrity sha512-tKs41J7NJVuaya8DxIOCnl8QuPHx5/ZVbFo1oKgVl1qHFBBrDctzQGtuLjPpRdNTWmKPH6oEvgN/MUID+l485Q==
+  resolved "https://registry.nlark.com/core-js/download/core-js-3.15.2.tgz?cache=0&sync_timestamp=1624966012065&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fcore-js%2Fdownload%2Fcore-js-3.15.2.tgz#740660d2ff55ef34ce664d7e2455119c5bdd3d61"
+  integrity sha1-dAZg0v9V7zTOZk1+JFURnFvdPWE=
 
 core-util-is@~1.0.0:
   version "1.0.2"
@@ -4190,6 +4204,59 @@ detective@^5.2.0:
     defined "^1.0.0"
     minimist "^1.1.1"
 
+devexpress-diagram@2.0.28:
+  version "2.0.28"
+  resolved "https://registry.nlark.com/devexpress-diagram/download/devexpress-diagram-2.0.28.tgz#8d49cdbfe9cf5fa2763e218d9c5b4651b45b2ce6"
+  integrity sha1-jUnNv+nPX6J2PiGNnFtGUbRbLOY=
+  dependencies:
+    "@devexpress/utils" "1.3"
+    es6-object-assign "^1.1.0"
+
+devexpress-gantt@2.0.38:
+  version "2.0.38"
+  resolved "https://registry.nlark.com/devexpress-gantt/download/devexpress-gantt-2.0.38.tgz#f92c488b8288af937cb338790a7c3d5d428366de"
+  integrity sha1-+SxIi4KIr5N8szh5Cnw9XUKDZt4=
+  dependencies:
+    "@devexpress/utils" "1.3.2"
+    tslib "2.1.0"
+
+devextreme-aspnet-data-nojquery@^2.8.2:
+  version "2.8.6"
+  resolved "https://registry.nlark.com/devextreme-aspnet-data-nojquery/download/devextreme-aspnet-data-nojquery-2.8.6.tgz#5ad6a6f5aa4d20696daa74fea5d3aad533b70525"
+  integrity sha1-Wtam9apNIGltqnT+pdOq1TO3BSU=
+
+devextreme-quill@~1.1.2:
+  version "1.1.4"
+  resolved "https://registry.nlark.com/devextreme-quill/download/devextreme-quill-1.1.4.tgz#95bf63a4c3dc58427a2244717fdb545c0575b1bf"
+  integrity sha1-lb9jpMPcWEJ6IkRxf9tUXAV1sb8=
+  dependencies:
+    core-js "^3.6.5"
+    eventemitter3 "^4.0.0"
+    lodash.clonedeep "^4.5.0"
+    lodash.isequal "^4.5.0"
+    lodash.merge "^4.5.0"
+    parchment "2.0.0-dev.2"
+    quill-delta "4.2.2"
+
+devextreme-vue@^20.2.4:
+  version "20.2.8"
+  resolved "https://registry.nlark.com/devextreme-vue/download/devextreme-vue-20.2.8.tgz?cache=0&sync_timestamp=1627458329265&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fdevextreme-vue%2Fdownload%2Fdevextreme-vue-20.2.8.tgz#94f00d394db2656ffa75d0fa723cbc029e642506"
+  integrity sha1-lPANOU2yZW/6ddD6cjy8Ap5kJQY=
+
+devextreme@^20.2.4:
+  version "20.2.8"
+  resolved "https://registry.nlark.com/devextreme/download/devextreme-20.2.8.tgz#1f42c92d3ce42519a3e33f3b159fb507e2841e5f"
+  integrity sha1-H0LJLTzkJRmj4z87FZ+1B+KEHl8=
+  dependencies:
+    devexpress-diagram "2.0.28"
+    devexpress-gantt "2.0.38"
+    devextreme-quill "~1.1.2"
+    jszip "^2.0.0 || ^3.0.0"
+    preact "^10.4.5"
+    rrule "2.6.6"
+    showdown "^1.9.1"
+    turndown "^7.0.0"
+
 didyoumean@^1.2.1:
   version "1.2.1"
   resolved "https://registry.npmjs.org/didyoumean/-/didyoumean-1.2.1.tgz#e92edfdada6537d484d73c0172fd1eba0c4976ff"
@@ -4296,6 +4363,11 @@ domhandler@^4.0.0, domhandler@^4.2.0:
   integrity sha512-zk7sgt970kzPks2Bf+dwT/PLzghLnsivb9CcxkvR8Mzr66Olr0Ofd8neSbglHJHaHa2MadfoSdNlKYAaafmWfA==
   dependencies:
     domelementtype "^2.2.0"
+
+domino@^2.1.6:
+  version "2.1.6"
+  resolved "https://registry.nlark.com/domino/download/domino-2.1.6.tgz#fe4ace4310526e5e7b9d12c7de01b7f485a57ffe"
+  integrity sha1-/krOQxBSbl57nRLH3gG39IWlf/4=
 
 domutils@^1.5.1:
   version "1.7.0"
@@ -4520,6 +4592,11 @@ es-to-primitive@^1.2.1:
     is-callable "^1.1.4"
     is-date-object "^1.0.1"
     is-symbol "^1.0.2"
+
+es6-object-assign@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npm.taobao.org/es6-object-assign/download/es6-object-assign-1.1.0.tgz#c2c3582656247c39ea107cb1e6652b6f9f24523c"
+  integrity sha1-wsNYJlYkfDnqEHyx5mUrb58kUjw=
 
 esbuild-node-loader@^0.1.1:
   version "0.1.1"
@@ -4973,10 +5050,10 @@ fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
   resolved "https://registry.npmjs.org/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz#3a7d56b559d6cbc3eb512325244e619a65c6c525"
   integrity sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==
 
-fast-diff@^1.1.2:
+fast-diff@1.2.0, fast-diff@^1.1.2:
   version "1.2.0"
-  resolved "https://registry.npmjs.org/fast-diff/-/fast-diff-1.2.0.tgz#73ee11982d86caaf7959828d519cfe927fac5f03"
-  integrity sha512-xJuoT5+L99XlZ8twedaRf6Ax2TgQVxvgZOYoPKqZufmJib0tL2tegPBOZb1pVNgIhlqDlA0eO0c3wBvQcmzx4w==
+  resolved "https://registry.nlark.com/fast-diff/download/fast-diff-1.2.0.tgz#73ee11982d86caaf7959828d519cfe927fac5f03"
+  integrity sha1-c+4RmC2Gyq95WYKNUZz+kn+sXwM=
 
 fast-glob@^3.0.3, fast-glob@^3.1.1, fast-glob@^3.2.5:
   version "3.2.5"
@@ -6022,6 +6099,11 @@ imagemin@^7.0.1:
     make-dir "^3.0.0"
     p-pipe "^3.0.0"
     replace-ext "^1.0.0"
+
+immediate@~3.0.5:
+  version "3.0.6"
+  resolved "https://registry.nlark.com/immediate/download/immediate-3.0.6.tgz#9db1dbd0faf8de6fbe0f5dd5e56bb606280de69b"
+  integrity sha1-nbHb0Pr43m++D13V5Wu2BigN5ps=
 
 import-cwd@^3.0.0:
   version "3.0.0"
@@ -7232,6 +7314,16 @@ jstransformer@1.0.0:
     is-promise "^2.0.0"
     promise "^7.0.1"
 
+"jszip@^2.0.0 || ^3.0.0":
+  version "3.7.0"
+  resolved "https://registry.nlark.com/jszip/download/jszip-3.7.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fjszip%2Fdownload%2Fjszip-3.7.0.tgz#9b8b995a4e7c9024653ce743e902076a82fdf4e6"
+  integrity sha1-m4uZWk58kCRlPOdD6QIHaoL99OY=
+  dependencies:
+    lie "~3.3.0"
+    pako "~1.0.2"
+    readable-stream "~2.3.6"
+    set-immediate-shim "~1.0.1"
+
 junk@^3.1.0:
   version "3.1.0"
   resolved "https://registry.npmjs.org/junk/-/junk-3.1.0.tgz#31499098d902b7e98c5d9b9c80f43457a88abfa1"
@@ -7315,6 +7407,13 @@ levn@~0.3.0:
   dependencies:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
+
+lie@~3.3.0:
+  version "3.3.0"
+  resolved "https://registry.nlark.com/lie/download/lie-3.3.0.tgz#dcf82dee545f46074daf200c7c1c5a08e0f40f6a"
+  integrity sha1-3Pgt7lRfRgdNryAMfBxaCOD0D2o=
+  dependencies:
+    immediate "~3.0.5"
 
 lilconfig@^2.0.3:
   version "2.0.3"
@@ -7440,6 +7539,11 @@ lodash.debounce@^4.0.8:
   resolved "https://registry.npmjs.org/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
   integrity sha1-gteb/zCmfEAF/9XiUVMArZyk168=
 
+lodash.isequal@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.nlark.com/lodash.isequal/download/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
+  integrity sha1-QVxEePK8wwEgwizhDtMib30+GOA=
+
 lodash.ismatch@^4.4.0:
   version "4.4.0"
   resolved "https://registry.npmjs.org/lodash.ismatch/-/lodash.ismatch-4.4.0.tgz#756cb5150ca3ba6f11085a78849645f188f85f37"
@@ -7450,10 +7554,10 @@ lodash.map@^4.5.1:
   resolved "https://registry.npmjs.org/lodash.map/-/lodash.map-4.6.0.tgz#771ec7839e3473d9c4cde28b19394c3562f4f6d3"
   integrity sha1-dx7Hg540c9nEzeKLGTlMNWL09tM=
 
-lodash.merge@^4.6.2:
+lodash.merge@^4.5.0, lodash.merge@^4.6.2:
   version "4.6.2"
-  resolved "https://registry.npmjs.org/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
-  integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
+  resolved "https://registry.nlark.com/lodash.merge/download/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
+  integrity sha1-VYqlO0O2YeGSWgr9+japoQhf5Xo=
 
 lodash.sortby@^4.7.0:
   version "4.7.0"
@@ -7584,6 +7688,11 @@ lru-cache@^6.0.0:
   integrity sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==
   dependencies:
     yallist "^4.0.0"
+
+luxon@^1.21.3:
+  version "1.28.0"
+  resolved "https://registry.nlark.com/luxon/download/luxon-1.28.0.tgz#e7f96daad3938c06a62de0fb027115d251251fbf"
+  integrity sha1-5/ltqtOTjAamLeD7AnEV0lElH78=
 
 magic-string@^0.25.0, magic-string@^0.25.7:
   version "0.25.7"
@@ -8452,6 +8561,11 @@ p-try@^2.0.0:
   resolved "https://registry.npmjs.org/p-try/-/p-try-2.2.0.tgz#cb2868540e313d61de58fafbe35ce9004d5540e6"
   integrity sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==
 
+pako@~1.0.2:
+  version "1.0.11"
+  resolved "https://registry.nlark.com/pako/download/pako-1.0.11.tgz#6c9599d340d54dfd3946380252a35705a6b992bf"
+  integrity sha1-bJWZ00DVTf05RjgCUqNXBaa5kr8=
+
 param-case@^3.0.3, param-case@^3.0.4:
   version "3.0.4"
   resolved "https://registry.npmjs.org/param-case/-/param-case-3.0.4.tgz#7d17fe4aa12bde34d4a77d91acfb6219caad01c5"
@@ -8459,6 +8573,11 @@ param-case@^3.0.3, param-case@^3.0.4:
   dependencies:
     dot-case "^3.0.4"
     tslib "^2.0.3"
+
+parchment@2.0.0-dev.2:
+  version "2.0.0-dev.2"
+  resolved "https://registry.nlark.com/parchment/download/parchment-2.0.0-dev.2.tgz#9d6fe57b3721317bd1c481ea38ffa9b287d496b8"
+  integrity sha1-nW/lezchMXvRxIHqOP+psofUlrg=
 
 parent-module@^1.0.0:
   version "1.0.1"
@@ -8928,10 +9047,10 @@ posthtml@^0.9.2:
     posthtml-parser "^0.2.0"
     posthtml-render "^1.0.5"
 
-preact@^10.4.8:
+preact@^10.4.5, preact@^10.4.8:
   version "10.5.14"
-  resolved "https://registry.yarnpkg.com/preact/-/preact-10.5.14.tgz#0b14a2eefba3c10a57116b90d1a65f5f00cd2701"
-  integrity sha512-KojoltCrshZ099ksUZ2OQKfbH66uquFoxHSbnwKbTJHeQNvx42EmC7wQVWNuDt6vC5s3nudRHFtKbpY4ijKlaQ==
+  resolved "https://registry.nlark.com/preact/download/preact-10.5.14.tgz#0b14a2eefba3c10a57116b90d1a65f5f00cd2701"
+  integrity sha1-CxSi7vujwQpXEWuQ0aZfXwDNJwE=
 
 prelude-ls@^1.2.1:
   version "1.2.1"
@@ -9234,6 +9353,15 @@ quick-lru@^5.1.1:
   version "5.1.1"
   resolved "https://registry.npmjs.org/quick-lru/-/quick-lru-5.1.1.tgz#366493e6b3e42a3a6885e2e99d18f80fb7a8c932"
   integrity sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==
+
+quill-delta@4.2.2:
+  version "4.2.2"
+  resolved "https://registry.nlark.com/quill-delta/download/quill-delta-4.2.2.tgz#015397d046e0a3bed087cd8a51f98c11a1b8f351"
+  integrity sha1-AVOX0Ebgo77Qh82KUfmMEaG481E=
+  dependencies:
+    fast-diff "1.2.0"
+    lodash.clonedeep "^4.5.0"
+    lodash.isequal "^4.5.0"
 
 randombytes@^2.1.0:
   version "2.1.0"
@@ -9628,6 +9756,15 @@ rollup@^2.38.5, rollup@^2.43.1, rollup@^2.51.2, rollup@^2.53.2:
   optionalDependencies:
     fsevents "~2.3.2"
 
+rrule@2.6.6:
+  version "2.6.6"
+  resolved "https://registry.nlark.com/rrule/download/rrule-2.6.6.tgz#70031727da4aa648ea0dcc524b6e95f565af063e"
+  integrity sha1-cAMXJ9pKpkjqDcxSS26V9WWvBj4=
+  dependencies:
+    tslib "^1.10.0"
+  optionalDependencies:
+    luxon "^1.21.3"
+
 run-async@^2.2.0, run-async@^2.4.0:
   version "2.4.1"
   resolved "https://registry.npmjs.org/run-async/-/run-async-2.4.1.tgz#8440eccf99ea3e70bd409d49aab88e10c189a455"
@@ -9767,6 +9904,11 @@ set-blocking@^2.0.0:
   resolved "https://registry.npmjs.org/set-blocking/-/set-blocking-2.0.0.tgz#045f9782d011ae9a6803ddd382b24392b3d890f7"
   integrity sha1-BF+XgtARrppoA93TgrJDkrPYkPc=
 
+set-immediate-shim@~1.0.1:
+  version "1.0.1"
+  resolved "https://registry.nlark.com/set-immediate-shim/download/set-immediate-shim-1.0.1.tgz#4b2b1b27eb808a9f8dcc481a58e5e56f599f3f61"
+  integrity sha1-SysbJ+uAip+NzEgaWOXlb1mfP2E=
+
 set-value@^2.0.0, set-value@^2.0.1:
   version "2.0.1"
   resolved "https://registry.npmjs.org/set-value/-/set-value-2.0.1.tgz#a18d40530e6f07de4228c7defe4227af8cad005b"
@@ -9819,6 +9961,13 @@ shelljs@^0.8.3:
     glob "^7.0.0"
     interpret "^1.0.0"
     rechoir "^0.6.2"
+
+showdown@^1.9.1:
+  version "1.9.1"
+  resolved "https://registry.nlark.com/showdown/download/showdown-1.9.1.tgz#134e148e75cd4623e09c21b0511977d79b5ad0ef"
+  integrity sha1-E04UjnXNRiPgnCGwURl315ta0O8=
+  dependencies:
+    yargs "^14.2"
 
 side-channel@^1.0.4:
   version "1.0.4"
@@ -10793,10 +10942,20 @@ ts-node@^10.1.0:
     source-map-support "^0.5.17"
     yn "3.1.1"
 
+tslib@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.nlark.com/tslib/download/tslib-2.0.1.tgz?cache=0&sync_timestamp=1623450901878&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ftslib%2Fdownload%2Ftslib-2.0.1.tgz#410eb0d113e5b6356490eec749603725b021b43e"
+  integrity sha1-QQ6w0RPltjVkkO7HSWA3JbAhtD4=
+
 tslib@2.0.3:
   version "2.0.3"
   resolved "https://registry.npmjs.org/tslib/-/tslib-2.0.3.tgz#8e0741ac45fc0c226e58a17bfc3e64b9bc6ca61c"
   integrity sha512-uZtkfKblCEQtZKBF6EBXVZeQNl82yqtDQdv+eck8u7tdPxjLu2/lp5/uPW+um2tpuxINHWy3GhiccY7QgEaVHQ==
+
+tslib@2.1.0, tslib@~2.1.0:
+  version "2.1.0"
+  resolved "https://registry.nlark.com/tslib/download/tslib-2.1.0.tgz?cache=0&sync_timestamp=1623450901878&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ftslib%2Fdownload%2Ftslib-2.1.0.tgz#da60860f1c2ecaa5703ab7d39bc05b6bf988b97a"
+  integrity sha1-2mCGDxwuyqVwOrfTm8Bba/mIuXo=
 
 tslib@^1.10.0, tslib@^1.8.1, tslib@^1.9.0:
   version "1.14.1"
@@ -10807,11 +10966,6 @@ tslib@^2.0.3:
   version "2.3.0"
   resolved "https://registry.npmjs.org/tslib/-/tslib-2.3.0.tgz#803b8cdab3e12ba581a4ca41c8839bbb0dacb09e"
   integrity sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==
-
-tslib@~2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.1.0.tgz#da60860f1c2ecaa5703ab7d39bc05b6bf988b97a"
-  integrity sha512-hcVC3wYEziELGGmEEXue7D75zbwIIVUMWAVbHItGPx0ziyXxrOMQx4rQEVEV45Ut/1IotuEvwqPopzIOkDMf0A==
 
 tsutils@^3.21.0:
   version "3.21.0"
@@ -10826,6 +10980,13 @@ tunnel-agent@^0.6.0:
   integrity sha1-J6XeoGs2sEoKmWZ3SykIaPD8QP0=
   dependencies:
     safe-buffer "^5.0.1"
+
+turndown@^7.0.0:
+  version "7.1.1"
+  resolved "https://registry.nlark.com/turndown/download/turndown-7.1.1.tgz#96992f2d9b40a1a03d3ea61ad31b5a5c751ef77f"
+  integrity sha1-lpkvLZtAoaA9PqYa0xtaXHUe938=
+  dependencies:
+    domino "^2.1.6"
 
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"
@@ -11880,6 +12041,14 @@ yargs-parser@^13.1.2:
     camelcase "^5.0.0"
     decamelize "^1.2.0"
 
+yargs-parser@^15.0.1:
+  version "15.0.3"
+  resolved "https://registry.nlark.com/yargs-parser/download/yargs-parser-15.0.3.tgz#316e263d5febe8b38eef61ac092b33dfcc9b1115"
+  integrity sha1-MW4mPV/r6LOO72GsCSsz38ybERU=
+  dependencies:
+    camelcase "^5.0.0"
+    decamelize "^1.2.0"
+
 yargs@^13.2.4:
   version "13.3.2"
   resolved "https://registry.npmjs.org/yargs/-/yargs-13.3.2.tgz#ad7ffefec1aa59565ac915f82dccb38a9c31a2dd"
@@ -11895,6 +12064,23 @@ yargs@^13.2.4:
     which-module "^2.0.0"
     y18n "^4.0.0"
     yargs-parser "^13.1.2"
+
+yargs@^14.2:
+  version "14.2.3"
+  resolved "https://registry.nlark.com/yargs/download/yargs-14.2.3.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fyargs%2Fdownload%2Fyargs-14.2.3.tgz#1a1c3edced1afb2a2fea33604bc6d1d8d688a414"
+  integrity sha1-Ghw+3O0a+yov6jNgS8bR2NaIpBQ=
+  dependencies:
+    cliui "^5.0.0"
+    decamelize "^1.2.0"
+    find-up "^3.0.0"
+    get-caller-file "^2.0.1"
+    require-directory "^2.1.1"
+    require-main-filename "^2.0.0"
+    set-blocking "^2.0.0"
+    string-width "^3.0.0"
+    which-module "^2.0.0"
+    y18n "^4.0.0"
+    yargs-parser "^15.0.1"
 
 yargs@^16.0.3, yargs@^16.2.0:
   version "16.2.0"
