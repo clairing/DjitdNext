@@ -130,7 +130,7 @@
       const rememberMe = ref(false);
 
       const formData = reactive({
-        account: 'vben',
+        account: 'superAdmin',
         password: '123456',
       });
 
@@ -148,7 +148,7 @@
           const userInfo = await userStore.login(
             toRaw({
               password: data.password,
-              username: data.account,
+              account: data.account,
               mode: 'none', //不要默认的错误提示
             })
           );
@@ -162,7 +162,18 @@
         } catch (error) {
           createErrorModal({
             title: t('sys.api.errorTip'),
-            content: error.message || t('sys.api.networkExceptionMsg'),
+            content:
+              (function () {
+                let resMsg = '';
+                if (error.constructor === Array) {
+                  for (var item of error) {
+                    resMsg += item.messages;
+                  }
+                } else {
+                  return error;
+                }
+                return resMsg;
+              })() || t('sys.api.networkExceptionMsg'),
             getContainer: () => document.body.querySelector(`.${prefixCls}`) || document.body,
           });
         } finally {

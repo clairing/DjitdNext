@@ -82,13 +82,12 @@ export const useUserStore = defineStore({
       try {
         const { goHome = true, mode, ...loginParams } = params;
         const data = await loginApi(loginParams, mode);
-        const { token } = data;
-
+        const token = data.data;
         // save token
         this.setToken(token);
         // get user info
-        const userInfo = await this.getUserInfoAction();
-
+        // const userInfo = await this.getUserInfoAction(); 获取用户信息
+        const userInfo = data;
         const sessionTimeout = this.sessionTimeout;
         if (sessionTimeout) {
           this.setSessionTimeout(false);
@@ -106,6 +105,7 @@ export const useUserStore = defineStore({
         }
         return userInfo;
       } catch (error) {
+        console.log(error);
         return Promise.reject(error);
       }
     },

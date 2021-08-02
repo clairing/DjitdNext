@@ -1,4 +1,3 @@
-/_ eslint-disable vue/no-unused-components _/
 <template>
   <button @click="getData">获取数据</button>
   <Form ref="dxForm" id="id" :options="options" />
