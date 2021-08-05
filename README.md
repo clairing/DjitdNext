@@ -21,3 +21,64 @@ You can initialize this repository with code from a Subversion, Mercurial, or TF
 ```
 
 提交注意事项 1 关闭远程
+
+```
+node_modules 修改：
+一、devextreme-aspnet-data-nojquery
+ 调整：回调做了修改处理：
+   function sendCore() {
+        ajaxUtility.sendRequest(ajaxSettings).then(
+          function (res, textStatus, xhr) {
+            if (res.code) {
+              if (res.code != 200) {
+                var error = res.message;
+                if (onAjaxError) {
+                  var e = { xhr: xhr, error: error };
+                  onAjaxError(e);
+                  error = e.error;
+                }
+                if (error)
+                  d.reject(error);
+                else
+                  d.reject(xhr, res.code);
+
+
+              } else {
+                if (customSuccessHandler)
+                  customSuccessHandler(d, res, xhr);
+                else
+                  d.resolve();
+              }
+
+            }
+            else {
+              if (customSuccessHandler)
+                customSuccessHandler(d, res, xhr);
+              else
+                d.resolve();
+            }
+          },
+          function (xhr, textStatus) {
+            var error = getErrorMessageFromXhr(xhr);
+            if (onAjaxError) {
+              var e = { xhr: xhr, error: error };
+              onAjaxError(e);
+              error = e.error;
+            }
+
+            if (error)
+              d.reject(error);
+            else
+              d.reject(xhr, textStatus);
+          }
+        );
+      }
+
+ 二、devextreme 本地化部署语言
+     location/messages 需改
+
+```
+
+问题： 8 月 4 号：
+
+1、dataGrid 中的 dxColumn 的 cell-template，模板重写，在插槽 slot 无效（父组件中）

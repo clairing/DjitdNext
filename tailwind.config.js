@@ -1,5 +1,5 @@
 module.exports = {
-  mode: 'jit',
+  mode: 'vben',
   // darkMode: 'class',
   plugins: [createEnterPlugin()],
   purge: {

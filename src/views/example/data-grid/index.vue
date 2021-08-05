@@ -1,6 +1,6 @@
 <template>
   <Card title="DataGrid用例">
-    <DataGrid :data-source="dataSourceConfig">
+    <DxDataGrid :data-source="dataSourceConfig">
       <DxPaging :page-size="10" />
       <DxPager :show-page-size-selector="true" :show-info="true" />
       <DxFilterRow :visible="true" />
@@ -53,15 +53,24 @@
         :hiding-priority="0"
         fixed="true"
         fixed-Position="right"
+        cell-template="phoneTemplate"
       />
-    </DataGrid>
+      <template #phoneTemplate="{ data }">{{ data.text }}1</template>
+    </DxDataGrid>
   </Card>
 </template>
 
 <script>
-  import { DataGrid } from '/@/components/DxDataGrid';
+  // import { DataGrid } from '/@/components/DxDataGrid';
   import 'devextreme/data/odata/store';
-  import { DxLookup, DxFilterRow, DxPager, DxPaging, DxColumn } from 'devextreme-vue/data-grid';
+  import {
+    DxLookup,
+    DxFilterRow,
+    DxPager,
+    DxPaging,
+    DxColumn,
+    DxDataGrid,
+  } from 'devextreme-vue/data-grid';
   import { ref, onMounted, defineComponent } from 'vue';
 
   const priorities = [
@@ -75,7 +84,7 @@
     name: 'Example',
     components: {
       DxFilterRow,
-      DataGrid,
+      DxDataGrid,
       DxLookup,
       DxColumn,
       DxPager,

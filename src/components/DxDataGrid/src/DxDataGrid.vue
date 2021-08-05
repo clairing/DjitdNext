@@ -19,28 +19,35 @@
     }"
     :column-resizing-mode="'widget'"
     :selection="{ mode: 'single' }"
+    :remote-operations="{
+      paging: true,
+      filtering: true,
+      sorting: true,
+      grouping: true,
+      summary: true,
+      groupPaging: true,
+    }"
+    @content-ready="onContentReady"
   >
     <DxPaging :page-size="pageNum" />
     <DxPager :show-page-size-selector="true" :show-info="true" :allowed-page-sizes="pageSizes" />
     <DxFilterRow :visible="true" />
-    <slot><DxColumn /></slot>
+    <slot></slot>
   </DxDataGrid>
 </template>
 
 <script>
-  import { DxDataGrid, DxPaging, DxPager, DxFilterRow, DxColumn } from 'devextreme-vue/data-grid';
+  import { DxDataGrid, DxPaging, DxPager, DxFilterRow } from 'devextreme-vue/data-grid';
   import { onMounted, ref, defineComponent } from 'vue';
   export default defineComponent({
     name: 'DataGrid',
-
     components: {
       DxDataGrid,
       DxPaging,
       DxPager,
       DxFilterRow,
-      DxColumn,
     },
-    inheritAttrs: true,
+    inheritAttrs: false,
     props: {
       pageSize: {
         type: Number,
@@ -58,9 +65,9 @@
       const pageNum = ref(20);
 
       function onContentReady() {
-        document.querySelector(
-          '.dx-datagrid-headers .dx-datagrid-table .dx-header-row .dx-command-edit'
-        ).innerText = '操作';
+        // document.querySelector(
+        //   '.dx-datagrid-headers .dx-datagrid-table .dx-header-row .dx-command-edit'
+        // ).innerHTML = '操作';
       }
       onMounted(
         (window.onresize = function () {

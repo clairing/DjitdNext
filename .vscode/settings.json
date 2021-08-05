@@ -120,7 +120,7 @@
   "i18n-ally.sourceLanguage": "en",
   "i18n-ally.enabledFrameworks": ["vue", "react"],
   "cSpell.words": [
-    "vben",
+    "jit",
     "windi",
     "browserslist",
     "tailwindcss",

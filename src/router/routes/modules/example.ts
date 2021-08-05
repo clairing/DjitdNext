@@ -11,6 +11,7 @@ const example: AppRouteModule = {
   meta: {
     icon: 'simple-icons:about-dot-me',
     title: '示例',
+    orderNo: 13,
   },
   children: [
     {

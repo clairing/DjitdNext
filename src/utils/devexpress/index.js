@@ -1,8 +1,7 @@
 import { createVNode, render } from 'vue';
 import { useUserStore } from '/@/store/modules/user'; // 获取user的store
 import Form from '/@/components/DxForm/index.vue';
-import dataSource from './data1';
-
+import dataSource from './data1.js';
 //Ez框架
 var Ez = {
   Name: 'EzFramework',
@@ -311,8 +310,7 @@ var Ez = {
 
 (function (ez) {
   ez.GetToken = function () {
-    const userStore = useUserStore();
-    return userStore.token;
+    return useUserStore().getToken;
   };
 })(Ez);
 

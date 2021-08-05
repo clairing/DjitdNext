@@ -45,3 +45,55 @@ svg,
 span {
   outline: none !important;
 }
+
+// -----------------------------------------------------------------------
+
+.dx-datagrid .dx-header-row {
+  background: #565656 !important;
+  color: #fff;
+  font-weight: 500;
+}
+
+.dx-treelist .dx-header-row {
+  background: #565656 !important;
+  color: #fff;
+  font-weight: 500;
+}
+
+.command-a {
+  text-decoration: underline;
+  cursor: pointer;
+  text-align: center;
+  display: inline-block;
+  width: 100%;
+}
+
+.dx-row-focused {
+  .command-a {
+    color: #fff;
+  }
+}
+
+.dx-datagrid-rowsview .dx-row-focused.dx-data-row .dx-command-edit:not(.dx-focused) .dx-link,
+.dx-datagrid-rowsview .dx-row-focused.dx-data-row > td:not(.dx-focused),
+.dx-datagrid-rowsview .dx-row-focused.dx-data-row > tr > td:not(.dx-focused) {
+  background-color: #7c8185;
+  color: #fff;
+}
+
+.dx-freespace-row {
+  height: 0 !important;
+}
+
+.dx-layout-manager .dx-label-h-align .dx-field-item-label .dx-field-item-label-content {
+  display: block;
+  min-width: 60px !important;
+}
+
+.dx-checkbox-indeterminate .dx-checkbox-icon::before {
+  content: '';
+}
+
+// .vben-menu-item {
+//   font-size: 14px !important;
+// }
