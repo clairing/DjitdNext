@@ -2,6 +2,8 @@ import { createVNode, render } from 'vue';
 import { useUserStore } from '/@/store/modules/user'; // 获取user的store
 import Form from '/@/components/DxForm/index.vue';
 import dataSource from './data1.js';
+import { defHttp } from '/@/utils/http/axios';
+import notify from 'devextreme/ui/notify';
 //Ez框架
 var Ez = {
   Name: 'EzFramework',
@@ -311,6 +313,36 @@ var Ez = {
 (function (ez) {
   ez.GetToken = function () {
     return useUserStore().getToken;
+  };
+})(Ez);
+
+// typeanme json文件数据类型： 1、customs 2、nems 3、npts
+// params  json 值
+
+(function (ez) {
+  ez.BasicData = function (typename, paramname) {
+    return defHttp
+      .get({ url: `/api/parameter/${typename}/${paramname}` }, { isTransformResponse: false })
+      .then((res) => {
+        return res.data;
+      });
+  };
+})(Ez);
+
+(function (ez) {
+  ez.Notify = function (msg) {
+    return notify(
+      {
+        message: msg,
+        position: {
+          my: 'center center',
+          at: 'center center',
+        },
+        width: 200,
+      },
+      'error',
+      2000
+    );
   };
 })(Ez);
 

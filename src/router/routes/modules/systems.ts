@@ -41,6 +41,15 @@ const example: AppRouteModule = {
         icon: '',
       },
     },
+    {
+      path: 'role',
+      name: 'Role',
+      component: () => import('/@/views/system/role/index.vue'),
+      meta: {
+        title: '角色管理',
+        icon: '',
+      },
+    },
   ],
 };
 

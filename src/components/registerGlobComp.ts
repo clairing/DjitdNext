@@ -6,11 +6,12 @@ import {
   // Need
   Button as AntButton,
   Input,
+  List,
 } from 'ant-design-vue';
 
 import { App } from 'vue';
 
-const compList = [Icon, AntButton.Group, Card];
+const compList = [Icon, AntButton.Group, Card, List];
 
 export function registerGlobComp(app: App) {
   compList.forEach((comp: any) => {

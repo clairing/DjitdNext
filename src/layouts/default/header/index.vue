@@ -47,7 +47,12 @@
         :showText="false"
         :class="`${prefixCls}-action__item`"
       />
-
+      <AppSysPicker
+        v-if="getShowLocalePicker"
+        :reload="true"
+        :showText="true"
+        :class="`${prefixCls}-action__item`"
+      />
       <UserDropDown :theme="getHeaderTheme" />
 
       <SettingDrawer v-if="getShowSetting" :class="`${prefixCls}-action__item`" />
@@ -72,7 +77,7 @@
 
   import { MenuModeEnum, MenuSplitTyeEnum } from '/@/enums/menuEnum';
   import { SettingButtonPositionEnum } from '/@/enums/appEnum';
-  import { AppLocalePicker } from '/@/components/Application';
+  import { AppLocalePicker, AppSysPicker } from '/@/components/Application';
 
   import { UserDropDown, LayoutBreadcrumb, FullScreen, Notify, ErrorAction } from './components';
   import { useAppInject } from '/@/hooks/web/useAppInject';
@@ -91,6 +96,7 @@
       LayoutMenu,
       UserDropDown,
       AppLocalePicker,
+      AppSysPicker,
       FullScreen,
       Notify,
       AppSearch,

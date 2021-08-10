@@ -6,7 +6,7 @@
         <ProjectCard :loading="loading" class="enter-y" />
         <DynamicInfo :loading="loading" class="!my-4 enter-y" />
       </div>
-      <div class="lg:w-3/10 w-full enter-y">
+      <div class="w-full lg:w-3/10 enter-y">
         <QuickNav :loading="loading" class="enter-y" />
 
         <Card class="!my-4 enter-y" :loading="loading">
@@ -32,6 +32,7 @@
   import QuickNav from './components/QuickNav.vue';
   import DynamicInfo from './components/DynamicInfo.vue';
   import SaleRadar from './components/SaleRadar.vue';
+  import Ez from '/@/utils/devexpress';
 
   export default defineComponent({
     components: {
@@ -44,6 +45,12 @@
       Card,
     },
     setup() {
+      console.log(
+        Ez.BasicData('customs', 'Incoterm').then((res) => {
+          return console.log(res.data);
+        })
+      );
+
       const loading = ref(true);
 
       setTimeout(() => {

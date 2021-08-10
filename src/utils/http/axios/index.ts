@@ -133,6 +133,8 @@ const transform: AxiosTransform = {
    * @description: 请求拦截器处理
    */
   requestInterceptors: (config, options) => {
+    // 2021/08/09 jwt验证
+    options.authenticationScheme = 'Bearer';
     // 请求之前处理config
     const token = getToken();
     if (token && (config as Recordable)?.requestOptions?.withToken !== false) {

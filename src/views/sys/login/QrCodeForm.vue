@@ -4,7 +4,7 @@
     <div class="enter-x min-w-64 min-h-64">
       <QrCode
         :value="qrCodeUrl"
-        class="enter-x flex justify-center xl:justify-start"
+        class="flex justify-center enter-x xl:justify-start"
         :width="280"
       />
       <Divider class="enter-x">{{ t('sys.login.scanSign') }}</Divider>

@@ -64,7 +64,7 @@ export default {
     qrSignInFormTitle: '二维码登录',
     signUpFormTitle: '注册',
     forgetFormTitle: '重置密码',
-
+    selectTenant: '选择租户',
     signInTitle: '点捷达中后台管理系统',
     signInDesc: '输入您的个人详细信息开始使用！',
     policy: '我同意xxx隐私政策',

@@ -70,6 +70,7 @@ export default {
     signInFormTitle: 'Sign in',
     signUpFormTitle: 'Sign up',
     forgetFormTitle: 'Reset password',
+    selectTenant: ' Select Tenant',
 
     signInTitle: 'Backstage management system',
     signInDesc: 'Enter your personal details and get started!',

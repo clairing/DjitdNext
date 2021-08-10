@@ -23,6 +23,7 @@
           [LoginStateEnum.REGISTER]: t('sys.login.signUpFormTitle'),
           [LoginStateEnum.MOBILE]: t('sys.login.mobileSignInFormTitle'),
           [LoginStateEnum.QR_CODE]: t('sys.login.qrSignInFormTitle'),
+          [LoginStateEnum.SELECT_TENANT]: t('sys.login.selectTenant'),
         };
         return titleObj[unref(getLoginState)];
       });

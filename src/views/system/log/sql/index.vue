@@ -1,5 +1,5 @@
 <template>
-  <Card title="租户管理">
+  <Card title="数据库操作日志">
     <DxDataGrid
       :data-source="dataSource"
       ref="dataGrid"
@@ -31,7 +31,6 @@
       }"
       @content-ready="onContentReady"
       @toolbar-preparing="onToolbarPreparing"
-      @selection-changed="onSelectionChanged"
     >
       <DxPaging :page-size="pageNum" />
       <DxPager :show-page-size-selector="true" :show-info="true" :allowed-page-sizes="pageSizes" />
@@ -44,60 +43,35 @@
         :start-edit-action="'dbClick'"
         :select-text-on-edit-start="true"
       >
-        <DxPopup :show-title="true" :width="800" :height="475" title="租户信息" />
+        <DxPopup :show-title="true" :width="800" :height="475" title="其他信息" />
         <DxForm>
-          <DxItem :col-count="2" :col-span="2" item-type="group">
-            <DxItem data-field="tenantAid" />
-            <DxItem data-field="tenantType" />
-            <DxItem data-field="code" />
-            <DxItem data-field="name" />
-            <DxItem data-field="expiryDate" />
-            <DxItem data-field="expiryDateEnabled" />
-            <DxItem data-field="enabled" />
-            <DxItem data-field="levelScore" />
-          </DxItem>
           <DxItem :col-count="2" :col-span="2" item-type="group">
             <DxItem
               :col-span="2"
-              data-field="connectionString"
+              data-field="sql"
               editor-type="dxTextArea"
-              :editor-options="{ height: 100 }"
+              :editor-options="{ height: 180 }"
+            />
+            <DxItem
+              :col-span="2"
+              data-field="sqlParams"
+              editor-type="dxTextArea"
+              :editor-options="{ height: 180 }"
             />
           </DxItem>
         </DxForm>
       </DxEditing>
-      <DxColumn data-field="tenantAid" caption="识别码" />
-      <DxColumn data-field="tenantType" caption="类型">
-        <DxLookup :data-source="user_types" value-expr="value" display-expr="text" />
-      </DxColumn>
-      <DxColumn data-field="code" caption="编码" />
-      <DxColumn data-field="name" caption="租户名称" />
-      <DxColumn data-field="superUserName" caption="超级管理员" cell-template="emailTemplate" />
 
-      <DxColumn
-        data-field="expiryDate"
-        caption="有效期"
-        cell-template="expiryDateTemplate"
-        data-type="date"
-        format="yyyy-MM-dd HH:mm:ss"
-      />
-
-      <DxColumn data-field="enabled" caption="是否启用" data-type="boolean" />
-      <DxColumn data-field="connectionString" caption="数据库连接字符串" />
-      <DxColumn data-field="levelScore" caption="积分" />
-      <DxColumn data-field="remark" caption="备注" />
-      <DxColumn
-        data-field="expiryDateEnabled"
-        caption="启用有效期"
-        :visible="false"
-        data-type="boolean"
-      />
-      <DxColumn data-field="cbyTime" caption="创建时间" :visible="false" data-type="date" />
-      <template #expiryDateTemplate="{ data }">
-        <div>
-          {{ data.text }}<span>{{ data.data.expiryDateEnabled ? '[已启用]' : '[未启用]' }}</span>
-        </div>
-      </template>
+      <DxColumn data-field="stackId" caption="追踪id" />
+      <DxColumn data-field="curdType" caption="Curd类型" />
+      <DxColumn data-field="tableName" caption="操作表" />
+      <DxColumn data-field="entityType" caption="实体类" />
+      <DxColumn data-field="sql" caption="sql语句" />
+      <DxColumn data-field="sqlParams" caption="sql参数" />
+      <DxColumn data-field="elapsedMilliseconds" caption="执行时间" />
+      <DxColumn data-field="success" caption="是否执行成功" />
+      <DxColumn data-field="executeResult" caption="执行结果" />
+      <DxColumn data-field="sqlException" caption="异常信息" />
     </DxDataGrid>
   </Card>
 </template>
@@ -106,7 +80,6 @@
   import {
     DxDataGrid,
     DxColumn,
-    DxLookup,
     DxPaging,
     DxPager,
     DxPopup,
@@ -119,14 +92,12 @@
   import { CreateStore } from '/@/utils/devextreme-aspnet-data-nojquery';
   import { DxTextArea } from 'devextreme-vue/text-area';
   import { defHttp } from '/@/utils/http/axios';
-  import Ez from '/@/utils/devexpress';
 
   export default defineComponent({
-    name: 'Application',
+    name: 'LogSql',
     components: {
       DxDataGrid,
       DxColumn,
-      DxLookup,
       DxPaging,
       DxPager,
       DxPopup,
@@ -137,25 +108,17 @@
       DxTextArea,
     },
     setup() {
-      const user_types = [
-        { value: '1', text: '超级管理员' },
-        { value: '2', text: '管理员' },
-        { value: '3', text: '普通用户' },
-      ];
       const dataGrid = ref(null);
       const dataSource = ref(null);
       const dgHeight = ref(0);
-      const selData = ref({});
       loadDataSource();
       function loadDataSource() {
         const http = 'https://localhost:44326';
-        const url = `${http}/api/tenant`;
+        const url = `${http}/api/log/sql`;
         dataSource.value = CreateStore({
           key: 'id',
           loadUrl: `${url}/list`,
-          insertUrl: `${url}/create-dev`,
           updateUrl: `${url}/update-dev`,
-          deleteUrl: `${url}/delete`,
         });
       }
       function onToolbarPreparing(e) {
@@ -180,13 +143,9 @@
               width: 150,
               type: 'default',
               icon: '',
-              text: '重新设置数据库连接',
+              text: '清除该用户所有的日志',
               onClick: () => {
-                if (!selData.value?.id) {
-                  Ez.Notify('请先选中一条数据后再操作！');
-                } else {
-                  defHttp.post({ url: `/api/tenant/reset-connection-string/${selData.value.id}` });
-                }
+                defHttp.post({ url: `/api/log/sql/clear` });
               },
             },
           }
@@ -196,10 +155,6 @@
         document.querySelector(
           '.dx-datagrid-headers .dx-datagrid-table .dx-header-row .dx-command-edit'
         ).innerHTML = '操作';
-      }
-      function onSelectionChanged({ selectedRowsData }) {
-        console.log(selectedRowsData);
-        selData.value = selectedRowsData[0];
       }
       onMounted(
         (window.onresize = function () {
@@ -212,10 +167,8 @@
         dgHeight,
         pageNum: 20,
         pageSizes: [5, 10, 20, 50, 100],
-        user_types,
         onContentReady,
         onToolbarPreparing,
-        onSelectionChanged,
       };
     },
   });

@@ -1,5 +1,5 @@
 <template>
-  <Card title="系统管理">
+  <Card title="应用管理">
     <DataGrid :data-source="dataSource">
       <DxEditing mode="row" :allow-adding="true" :allow-deleting="true" :allow-updating="true" />
       <DxColumn data-field="code" caption="系统编码" />

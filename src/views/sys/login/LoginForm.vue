@@ -153,6 +153,7 @@
             })
           );
           if (userInfo) {
+            setLoginState(LoginStateEnum.SELECT_TENANT);
             notification.success({
               message: t('sys.login.loginSuccessTitle'),
               description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.realName}`,
