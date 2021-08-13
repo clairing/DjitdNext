@@ -109,7 +109,7 @@
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": false
     },
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "johnsoncodehk.volar"
   },
   "i18n-ally.localesPaths": ["src/locales/lang"],
   "i18n-ally.keystyle": "nested",

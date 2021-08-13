@@ -76,9 +76,17 @@ node_modules 修改：
 
  二、devextreme 本地化部署语言
      location/messages 需改
+三、2、引用全局属性设置 env import { useGlobSetting } from '/@/hooks/setting';
+
+四、每次改动env 文件相关文件
+    需要重启vs code 服务程序
 
 ```
 
 问题： 8 月 4 号：
 
 1、dataGrid 中的 dxColumn 的 cell-template，模板重写，在插槽 slot 无效（父组件中）
+
+```
+
+```

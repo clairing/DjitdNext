@@ -1,5 +1,11 @@
 <template>
-  <DxButton :text="text" styling-mode="contained" :icon="icon" @click="click" />
+  <DxButton
+    :text="text"
+    styling-mode="contained"
+    :icon="icon"
+    @click="click"
+    :use-submit-behavior="useSubmitBehavior"
+  />
 </template>
 
 <script>
@@ -27,6 +33,10 @@
       icon: {
         type: String,
         default: '',
+      },
+      useSubmitBehavior: {
+        type: Boolean,
+        default: false,
       },
     },
   });

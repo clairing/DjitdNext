@@ -33,14 +33,21 @@ export interface LoginResultModel {
  */
 export interface GetUserInfoModel {
   roles: RoleInfo[];
+  roleIds: array;
   // 用户id
   userId: string | number;
   // 用户名
-  username: string;
+  userName: string;
   // 真实名字
-  realName: string;
+  // realName: string;
   // 头像
   avatar: string;
   // 介绍
   desc?: string;
+  //账户
+  account: string;
+  //超级管理员
+  superAdmin: bool;
+  // 菜单样式
+  menuStyle: bool;
 }

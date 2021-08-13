@@ -139,7 +139,6 @@
       //onKeyStroke('Enter', handleLogin);
 
       const getShow = computed(() => unref(getLoginState) === LoginStateEnum.LOGIN);
-
       async function handleLogin() {
         const data = await validForm();
         if (!data) return;
@@ -153,10 +152,10 @@
             })
           );
           if (userInfo) {
-            setLoginState(LoginStateEnum.SELECT_TENANT);
+            // setLoginState(LoginStateEnum.SELECT_TENANT);
             notification.success({
               message: t('sys.login.loginSuccessTitle'),
-              description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.realName}`,
+              description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.userName}`,
               duration: 3,
             });
           }

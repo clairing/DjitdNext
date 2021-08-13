@@ -20,11 +20,9 @@
 <script lang="ts">
   // import type { LocaleType } from '/#/config';
   // import type { DropMenu } from '/@/components/Dropdown';
-  import { defineComponent, ref, watchEffect, unref, computed } from 'vue';
+  import { defineComponent, ref, computed } from 'vue';
   import { Dropdown } from '/@/components/Dropdown';
   import { Icon } from '/@/components/Icon';
-  import { useLocale } from '/@/locales/useLocale';
-  // import { localeList } from '/@/settings/localeSetting';
 
   const props = {
     /**
@@ -53,9 +51,6 @@
     setup() {
       const selectedKeys = ref<string[]>([]);
 
-      const { getLocale } = useLocale();
-      console.log(getLocale);
-
       const getLocaleText = computed(() => {
         const key = selectedKeys.value[0];
         if (!key) {
@@ -64,21 +59,10 @@
         return localeList.find((item) => item.event === key)?.text;
       });
 
-      watchEffect(() => {
-        selectedKeys.value = [unref(getLocale)];
-      });
-
-      // function toggleLocale(e) {
-      //   console.log(e);
-      //   props.reload && location.reload();
-      // }
-
+      // 加载处理选择应用
       function handleMenuEvent(e) {
         console.log(e);
-        // if (unref(getLocale) === menu.event) {
-        //   return;
-        // }
-        // toggleLocale(menu.event as string);
+        alert(JSON.stringify(e));
       }
 
       return { localeList, handleMenuEvent, selectedKeys, getLocaleText };

@@ -42,7 +42,7 @@ export const useUserStore = defineStore({
       return this.token || getAuthCache<string>(TOKEN_KEY);
     },
     getRoleList(): RoleEnum[] {
-      return this.roleList.length > 0 ? this.roleList : getAuthCache<RoleEnum[]>(ROLES_KEY);
+      return this.roleList?.length > 0 ? this.roleList : getAuthCache<RoleEnum[]>(ROLES_KEY);
     },
     getSessionTimeout(): boolean {
       return !!this.sessionTimeout;
@@ -80,15 +80,15 @@ export const useUserStore = defineStore({
       }
     ): Promise<GetUserInfoModel | null> {
       try {
-        debugger;
         const { goHome = true, mode, ...loginParams } = params;
         const data = await loginApi(loginParams, mode);
         const token = data.data;
         // save token
         this.setToken(token);
-        // get user info
-        // const userInfo = await this.getUserInfoAction(); 获取用户信息
-        const userInfo = data;
+        // get user info        获取用户信息
+        const userInfo = await this.getUserInfoAction();
+        debugger;
+        // const userInfo = data;
         const sessionTimeout = this.sessionTimeout;
         if (sessionTimeout) {
           this.setSessionTimeout(false);
@@ -102,20 +102,23 @@ export const useUserStore = defineStore({
             router.addRoute(PAGE_NOT_FOUND_ROUTE as unknown as RouteRecordRaw);
             permissionStore.setDynamicAddedRoute(true);
           }
-          // await router.replace(userInfo.homePath || PageEnum.BASE_HOME);
+          await router.replace(userInfo.homePath || PageEnum.BASE_HOME);
         }
         return userInfo;
       } catch (error) {
-        console.log(error);
         return Promise.reject(error);
       }
     },
     async getUserInfoAction(): Promise<UserInfo> {
-      const userInfo = await getUserInfo();
-      const { roles } = userInfo;
-      const roleList = roles.map((item) => item.value) as RoleEnum[];
-      this.setUserInfo(userInfo);
-      this.setRoleList(roleList);
+      debugger;
+      const res = await getUserInfo();
+      const userInfo = res.code == '200' ? res.data : null;
+      if (userInfo) {
+        const { roles } = userInfo;
+        const roleList = roles?.map((item) => item.value) as RoleEnum[];
+        this.setUserInfo(userInfo);
+        this.setRoleList(roleList);
+      }
       return userInfo;
     },
     /**

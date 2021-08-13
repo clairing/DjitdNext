@@ -80,7 +80,6 @@
     emits: ['menuEvent'],
     setup(props, { emit }) {
       function handleClickMenu(item: DropMenu) {
-        debugger;
         const { event } = item;
         const menu = props.dropMenuList.find((item) => `${item.event}` === `${event}`);
         emit('menuEvent', menu);

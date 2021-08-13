@@ -95,7 +95,8 @@
       <DxColumn data-field="cbyTime" caption="创建时间" :visible="false" data-type="date" />
       <template #expiryDateTemplate="{ data }">
         <div>
-          {{ data.text }}<span>{{ data.data.expiryDateEnabled ? '[已启用]' : '[未启用]' }}</span>
+          {{ data.text }}
+          <span>{{ data.data.expiryDateEnabled ? '[已启用]' : '[未启用]' }}</span>
         </div>
       </template>
     </DxDataGrid>
@@ -103,7 +104,28 @@
 </template>
 
 <script>
-  import {
+import {
+  DxDataGrid,
+  DxColumn,
+  DxLookup,
+  DxPaging,
+  DxPager,
+  DxPopup,
+  DxEditing,
+  DxFilterRow,
+  DxForm,
+} from 'devextreme-vue/data-grid';
+import { DxItem } from 'devextreme-vue/form';
+import { onMounted, ref, defineComponent } from 'vue';
+import { CreateStore } from '/@/utils/devextreme-aspnet-data-nojquery';
+import { DxTextArea } from 'devextreme-vue/text-area';
+import { defHttp } from '/@/utils/http/axios';
+import Ez from '/@/utils/devexpress';
+import { userGlobSetting } from '/@/hooks/setting';
+
+export default defineComponent({
+  name: 'Application',
+  components: {
     DxDataGrid,
     DxColumn,
     DxLookup,
@@ -113,110 +135,90 @@
     DxEditing,
     DxFilterRow,
     DxForm,
-  } from 'devextreme-vue/data-grid';
-  import { DxItem } from 'devextreme-vue/form';
-  import { onMounted, ref, defineComponent } from 'vue';
-  import { CreateStore } from '/@/utils/devextreme-aspnet-data-nojquery';
-  import { DxTextArea } from 'devextreme-vue/text-area';
-  import { defHttp } from '/@/utils/http/axios';
-  import Ez from '/@/utils/devexpress';
-
-  export default defineComponent({
-    name: 'Application',
-    components: {
-      DxDataGrid,
-      DxColumn,
-      DxLookup,
-      DxPaging,
-      DxPager,
-      DxPopup,
-      DxEditing,
-      DxFilterRow,
-      DxForm,
-      DxItem,
-      DxTextArea,
-    },
-    setup() {
-      const user_types = [
-        { value: '1', text: '超级管理员' },
-        { value: '2', text: '管理员' },
-        { value: '3', text: '普通用户' },
-      ];
-      const dataGrid = ref(null);
-      const dataSource = ref(null);
-      const dgHeight = ref(0);
-      const selData = ref({});
-      loadDataSource();
-      function loadDataSource() {
-        const http = 'https://localhost:44326';
-        const url = `${http}/api/tenant`;
-        dataSource.value = CreateStore({
-          key: 'id',
-          loadUrl: `${url}/list`,
-          insertUrl: `${url}/create-dev`,
-          updateUrl: `${url}/update-dev`,
-          deleteUrl: `${url}/delete`,
-        });
-      }
-      function onToolbarPreparing(e) {
-        e.toolbarOptions.items.unshift(
-          {
-            location: 'before',
-            widget: 'dxButton',
-            options: {
-              width: 86,
-              type: 'normal',
-              icon: 'refresh',
-              text: '刷新',
-              onClick: () => {
-                dataGrid.value.instance.refresh();
-              },
+    DxItem,
+    DxTextArea,
+  },
+  setup() {
+    const user_types = [
+      { value: '1', text: '超级管理员' },
+      { value: '2', text: '管理员' },
+      { value: '3', text: '普通用户' },
+    ];
+    const dataGrid = ref(null);
+    const dataSource = ref(null);
+    const dgHeight = ref(0);
+    const selData = ref({});
+    loadDataSource();
+    function loadDataSource() {
+      const { urlPrefix } = userGlobSetting();
+      const url = `${urlPrefix}/api/tenant`;
+      dataSource.value = CreateStore({
+        key: 'id',
+        loadUrl: `${url}/list`,
+        insertUrl: `${url}/create-dev`,
+        updateUrl: `${url}/update-dev`,
+        deleteUrl: `${url}/delete`,
+      });
+    }
+    function onToolbarPreparing(e) {
+      e.toolbarOptions.items.unshift(
+        {
+          location: 'before',
+          widget: 'dxButton',
+          options: {
+            width: 86,
+            type: 'normal',
+            icon: 'refresh',
+            text: '刷新',
+            onClick: () => {
+              dataGrid.value.instance.refresh();
             },
           },
-          {
-            location: 'before',
-            widget: 'dxButton',
-            options: {
-              width: 150,
-              type: 'default',
-              icon: '',
-              text: '重新设置数据库连接',
-              onClick: () => {
-                if (!selData.value?.id) {
-                  Ez.Notify('请先选中一条数据后再操作！');
-                } else {
-                  defHttp.post({ url: `/api/tenant/reset-connection-string/${selData.value.id}` });
-                }
-              },
+        },
+        {
+          location: 'before',
+          widget: 'dxButton',
+          options: {
+            width: 150,
+            type: 'default',
+            icon: '',
+            text: '重新设置数据库连接',
+            onClick: () => {
+              if (!selData.value?.id) {
+                Ez.Notify('请先选中一条数据后再操作！');
+              } else {
+                defHttp.post({ url: `/api/tenant/reset-connection-string/${selData.value.id}` });
+              }
             },
-          }
-        );
-      }
-      function onContentReady() {
-        document.querySelector(
-          '.dx-datagrid-headers .dx-datagrid-table .dx-header-row .dx-command-edit'
-        ).innerHTML = '操作';
-      }
-      function onSelectionChanged({ selectedRowsData }) {
-        console.log(selectedRowsData);
-        selData.value = selectedRowsData[0];
-      }
-      onMounted(
-        (window.onresize = function () {
-          dgHeight.value = window.innerHeight - 180;
-        })
+          },
+        }
       );
-      return {
-        dataGrid,
-        dataSource,
-        dgHeight,
-        pageNum: 20,
-        pageSizes: [5, 10, 20, 50, 100],
-        user_types,
-        onContentReady,
-        onToolbarPreparing,
-        onSelectionChanged,
-      };
-    },
-  });
+    }
+    function onContentReady() {
+      document.querySelector(
+        '.dx-datagrid-headers .dx-datagrid-table .dx-header-row .dx-command-edit'
+      ).innerHTML = '操作';
+    }
+    function onSelectionChanged({ selectedRowsData }) {
+      console.log(selectedRowsData);
+      selData.value = selectedRowsData[0];
+    }
+    onMounted(
+      (window.onresize = function () {
+        dgHeight.value = window.innerHeight - 180;
+      })
+    );
+    return {
+      dataGrid,
+      dataSource,
+      dgHeight,
+      pageNum: 20,
+      pageSizes: [5, 10, 20, 50, 100],
+      user_types,
+      onContentReady,
+      onToolbarPreparing,
+      onSelectionChanged,
+    };
+  },
+});
 </script>

@@ -32,6 +32,15 @@ const example: AppRouteModule = {
         icon: 'simple-icons:about-dot-me',
       },
     },
+    {
+      path: 'test',
+      name: 'Test',
+      component: () => import('/@/views/example/test/index.vue'),
+      meta: {
+        title: 'Test',
+        icon: 'simple-icons:about-dot-me',
+      },
+    },
   ],
 };
 

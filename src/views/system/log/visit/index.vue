@@ -47,7 +47,25 @@
 </template>
 
 <script>
-  import {
+import {
+  DxDataGrid,
+  DxColumn,
+  DxPaging,
+  DxPager,
+  DxPopup,
+  DxFilterRow,
+  DxForm,
+} from 'devextreme-vue/data-grid';
+import { DxItem } from 'devextreme-vue/form';
+import { onMounted, ref, defineComponent } from 'vue';
+import { CreateStore } from '/@/utils/devextreme-aspnet-data-nojquery';
+import { DxTextArea } from 'devextreme-vue/text-area';
+import { defHttp } from '/@/utils/http/axios';
+import { userGlobSetting } from '/@/hooks/setting';
+
+export default defineComponent({
+  name: 'LogSql',
+  components: {
     DxDataGrid,
     DxColumn,
     DxPaging,
@@ -55,88 +73,75 @@
     DxPopup,
     DxFilterRow,
     DxForm,
-  } from 'devextreme-vue/data-grid';
-  import { DxItem } from 'devextreme-vue/form';
-  import { onMounted, ref, defineComponent } from 'vue';
-  import { CreateStore } from '/@/utils/devextreme-aspnet-data-nojquery';
-  import { DxTextArea } from 'devextreme-vue/text-area';
-  import { defHttp } from '/@/utils/http/axios';
-
-  export default defineComponent({
-    name: 'LogSql',
-    components: {
-      DxDataGrid,
-      DxColumn,
-      DxPaging,
-      DxPager,
-      DxPopup,
-      DxFilterRow,
-      DxForm,
-      DxItem,
-      DxTextArea,
-    },
-    setup() {
-      const dataGrid = ref(null);
-      const dataSource = ref(null);
-      const dgHeight = ref(0);
-      loadDataSource();
-      function loadDataSource() {
-        const http = 'https://localhost:44326';
-        const url = `${http}/api/log/visit`;
-        dataSource.value = CreateStore({
-          key: 'id',
-          loadUrl: `${url}/list`,
-        });
-      }
-      function onToolbarPreparing(e) {
-        e.toolbarOptions.items.unshift(
-          {
-            location: 'before',
-            widget: 'dxButton',
-            options: {
-              width: 86,
-              type: 'normal',
-              icon: 'refresh',
-              text: '刷新',
-              onClick: () => {
-                dataGrid.value.instance.refresh();
-              },
+    DxItem,
+    DxTextArea,
+  },
+  setup() {
+    const dataGrid = ref(null);
+    const dataSource = ref(null);
+    const dgHeight = ref(0);
+    loadDataSource();
+    function loadDataSource() {
+      const { urlPrefix } = userGlobSetting();
+      const url = `${urlPrefix}/api/log/visit`;
+      dataSource.value = CreateStore({
+        key: 'id',
+        loadUrl: `${url}/list`,
+      });
+    }
+    function onToolbarPreparing(e) {
+      e.toolbarOptions.items.unshift(
+        {
+          location: 'before',
+          widget: 'dxButton',
+          options: {
+            width: 86,
+            type: 'normal',
+            icon: 'refresh',
+            text: '刷新',
+            onClick: () => {
+              dataGrid.value.instance.refresh();
             },
           },
-          {
-            location: 'before',
-            widget: 'dxButton',
-            options: {
-              width: 150,
-              type: 'default',
-              icon: '',
-              text: '清除该用户所有的日志',
-              onClick: () => {
-                defHttp.post({ url: `/api/log/visit/clear` });
-              },
+        },
+        {
+          location: 'before',
+          widget: 'dxButton',
+          options: {
+            width: 150,
+            type: 'default',
+            icon: '',
+            text: '清除该用户所有的日志',
+            onClick: () => {
+              defHttp.post({ url: `/api/log/visit/clear` }).then((res) => {
+                if (res.code === 204) {
+                  dataGrid.value.instance.refresh();
+                }
+              });
             },
-          }
-        );
-      }
-      function onContentReady() {
-        document.querySelector(
-          '.dx-datagrid-headers .dx-datagrid-table .dx-header-row .dx-command-edit'
-        ).innerHTML = '操作';
-      }
-      onMounted(
-        (window.onresize = function () {
-          dgHeight.value = window.innerHeight - 180;
-        })
+          },
+        }
       );
-      return {
-        dataGrid,
-        dataSource,
-        dgHeight,
-        pageNum: 20,
-        pageSizes: [5, 10, 20, 50, 100],
-        onContentReady,
-        onToolbarPreparing,
-      };
-    },
-  });
+    }
+    function onContentReady() {
+      document.querySelector(
+        '.dx-datagrid-headers .dx-datagrid-table .dx-header-row .dx-command-edit'
+      ).innerHTML = '操作';
+    }
+    onMounted(
+      (window.onresize = function () {
+        dgHeight.value = window.innerHeight - 180;
+      })
+    );
+    return {
+      dataGrid,
+      dataSource,
+      dgHeight,
+      pageNum: 20,
+      pageSizes: [5, 10, 20, 50, 100],
+      onContentReady,
+      onToolbarPreparing,
+    };
+  },
+});
 </script>

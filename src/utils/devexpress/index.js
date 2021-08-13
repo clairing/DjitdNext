@@ -4,6 +4,7 @@ import Form from '/@/components/DxForm/index.vue';
 import dataSource from './data1.js';
 import { defHttp } from '/@/utils/http/axios';
 import notify from 'devextreme/ui/notify';
+import { Button } from '/@/components/DxButton';
 //Ez框架
 var Ez = {
   Name: 'EzFramework',
@@ -310,16 +311,11 @@ var Ez = {
   };
 })(Ez);
 
-(function (ez) {
-  ez.GetToken = function () {
-    return useUserStore().getToken;
-  };
-})(Ez);
-
 // typeanme json文件数据类型： 1、customs 2、nems 3、npts
 // params  json 值
 
 (function (ez) {
+  // 获取海关参数
   ez.BasicData = function (typename, paramname) {
     return defHttp
       .get({ url: `/api/parameter/${typename}/${paramname}` }, { isTransformResponse: false })
@@ -327,10 +323,22 @@ var Ez = {
         return res.data;
       });
   };
+  // 获取token
+  ez.GetToken = function () {
+    return useUserStore().getToken;
+  };
+  // 组件转dom
+  ez.RenderComponent = function (id, comp, options) {
+    const container = document.createElement('div');
+    const vm = createVNode(comp, options);
+    render(vm, container);
+    document.querySelector(id).appendChild(container);
+  };
 })(Ez);
 
+// 消息通知
 (function (ez) {
-  ez.Notify = function (msg) {
+  ez.Notify = function (msg, type) {
     return notify(
       {
         message: msg,
@@ -340,9 +348,81 @@ var Ez = {
         },
         width: 200,
       },
-      'error',
+      type || 'error',
       2000
     );
+  };
+})(Ez);
+// 按钮
+(function (ez) {
+  ez.Button = {
+    Init: function (id, icon, text, click, type) {
+      var _id, _icon, _text, _click, _button;
+      if (!ez.Type.isString(id)) {
+        throw 'id is required.';
+      } else {
+        if (ez.Type.isString(icon) && ez.Type.isString(text) && ez.Type.isFunction(click)) {
+          _icon = icon;
+          _text = text;
+          _click = click;
+        }
+        if (ez.Type.isString(icon) && ez.Type.isFunction(text)) {
+          if (
+            icon.indexOf('fa ') > -1 ||
+            ez.DevIcons.indexOf(icon) > -1 ||
+            icon.indexOf('/') > -1
+          ) {
+            _icon = icon;
+          } else {
+            _text = icon;
+          }
+          _click = text;
+        }
+        const op = {
+          text: _text,
+          type: type || 'normal',
+          icon: _icon,
+          onClick: function (e) {
+            if (ez.Type.isFunction(_click)) _click(e);
+          },
+        };
+        ez.RenderComponent(id, Button, op);
+      }
+    },
+    Normal: function (id, icon, text, click) {
+      this.Init(id, icon, text, click, 'normal');
+    },
+    Success: function (id, icon, text, click) {
+      this.Init(id, icon, text, click, 'success');
+    },
+    Warning: function (id, icon, text, click) {
+      this.Init(id, icon, click, 'danger');
+    },
+    Default: function (id, icon, text, click) {
+      this.Init(id, icon, text, click, 'default');
+    },
+    // 扩展按钮
+    OK: function (id, text, click) {
+      this.Normal(id, 'check', text, click);
+    },
+    Submit: function (id, text) {
+      var _id, _text;
+      if (!ez.Type.isString(id)) {
+        throw 'id is required.';
+      } else {
+        _id = id;
+        _text = 'button_submit';
+        if (ez.Type.isString(text)) {
+          _text = text;
+        }
+        ez.RenderComponent(id, Button, {
+          text: '提交',
+          type: 'success',
+          icon: 'todo',
+          useSubmitBehavior: true,
+        });
+      }
+    },
   };
 })(Ez);
 

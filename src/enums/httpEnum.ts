@@ -3,8 +3,11 @@
  */
 export enum ResultEnum {
   SUCCESS = 200,
-  ERROR = 401 | 403,
-  TIMEOUT = 401,
+  NOCONTENTSUCCESS = 204,
+  ERROR = 403,
+  NOAUTH = 401,
+  NOPREMISSION = 403,
+  TIMEOUT = 500,
   TYPE = 'success',
 }
 
@@ -14,8 +17,8 @@ export enum ResultEnum {
 export enum RequestEnum {
   GET = 'GET',
   POST = 'POST',
-  PUT = 'PUT',
-  DELETE = 'DELETE',
+  PUT = 'POST',
+  DELETE = 'POST',
 }
 
 /**

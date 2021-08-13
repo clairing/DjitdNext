@@ -90,12 +90,7 @@
         data-type="boolean"
         :visible="false"
       />
-      <DxColumn
-        data-field="emailVerified"
-        caption="邮箱是否验证"
-        data-type="boolean"
-        :visible="false"
-      />
+      <DxColumn data-field="emailVerified" caption="邮箱是否验证" data-type="boolean" :visible="false" />
       <DxColumn
         data-field="expiryDateEnabled"
         caption="是否启用用户有效期"
@@ -112,29 +107,40 @@
 
       <template #phoneTemplate="{ data }">
         <div>
-          {{ formatGuid(data.text)
-          }}<span v-if="formatGuid(data.text)">{{
-            data.data.emailVerified ? '[已验证]' : '[未验证]'
-          }}</span>
+          {{
+            formatGuid(data.text)
+          }}
+          <span v-if="formatGuid(data.text)">
+            {{
+              data.data.emailVerified ? '[已验证]' : '[未验证]'
+            }}
+          </span>
         </div>
       </template>
       <template #emailTemplate="{ data }">
         <div>
-          {{ formatGuid(data.text)
-          }}<span v-if="formatGuid(data.text)">{{
-            data.data.emailVerified ? '[已验证]' : '[未验证]'
-          }}</span>
+          {{
+            formatGuid(data.text)
+          }}
+          <span v-if="formatGuid(data.text)">
+            {{
+              data.data.emailVerified ? '[已验证]' : '[未验证]'
+            }}
+          </span>
         </div>
       </template>
       <template #expiryDateTemplate="{ data }">
         <div>
-          {{ data.text }}<span>{{ data.data.expiryDateEnabled ? '[已启用]' : '[未启用]' }}</span>
+          {{ data.text }}
+          <span>{{ data.data.expiryDateEnabled ? '[已启用]' : '[未启用]' }}</span>
         </div>
       </template>
       <template #passwordDateTemplate="{ data }">
         <div>
-          {{ data.text
-          }}<span>{{ data.data.passwordExpiryDateEnabled ? '[已启用]' : '[未启用]' }}</span>
+          {{
+            data.text
+          }}
+          <span>{{ data.data.passwordExpiryDateEnabled ? '[已启用]' : '[未启用]' }}</span>
         </div>
       </template>
     </DxDataGrid>
@@ -142,7 +148,25 @@
 </template>
 
 <script>
-  import {
+import {
+  DxDataGrid,
+  DxColumn,
+  DxLookup,
+  DxPaging,
+  DxPager,
+  DxPopup,
+  DxEditing,
+  DxFilterRow,
+  DxForm,
+} from 'devextreme-vue/data-grid';
+import { DxItem } from 'devextreme-vue/form';
+import { onMounted, ref, defineComponent } from 'vue';
+import { CreateStore } from '/@/utils/devextreme-aspnet-data-nojquery';
+import { userGlobSetting } from '/@/hooks/setting';
+
+export default defineComponent({
+  name: 'Application',
+  components: {
     DxDataGrid,
     DxColumn,
     DxLookup,
@@ -152,70 +176,54 @@
     DxEditing,
     DxFilterRow,
     DxForm,
-  } from 'devextreme-vue/data-grid';
-  import { DxItem } from 'devextreme-vue/form';
-  import { onMounted, ref, defineComponent } from 'vue';
-  import { CreateStore } from '/@/utils/devextreme-aspnet-data-nojquery';
-  export default defineComponent({
-    name: 'Application',
-    components: {
-      DxDataGrid,
-      DxColumn,
-      DxLookup,
-      DxPaging,
-      DxPager,
-      DxPopup,
-      DxEditing,
-      DxFilterRow,
-      DxForm,
-      DxItem,
-    },
-    setup() {
-      const user_types = [
-        { value: '1', text: '超级管理员' },
-        { value: '2', text: '管理员' },
-        { value: '3', text: '普通用户' },
-      ];
-      const http = 'https://localhost:44326';
-      const url = `${http}/api/tenantuser`;
-      const dgHeight = ref(0);
-      const dataSource = CreateStore({
-        key: 'id',
-        loadUrl: `${url}/list`,
-        insertUrl: `${url}/create-dev`,
-        updateUrl: `${url}/update-dev`,
-        deleteUrl: `${url}/delete`,
-      });
-      function onContentReady() {
-        // document.querySelector(
-        //   '.dx-datagrid-headers .dx-datagrid-table .dx-header-row .dx-command-edit'
-        // ).innerHTML = '操作';
-      }
-      function formatGuid(value) {
-        const reg = new RegExp(
-          /^[0-9a-zA-Z]{8}[0-9a-zA-Z]{4}[0-9a-zA-Z]{4}[0-9a-zA-Z]{4}[0-9a-zA-Z]{12}$/
-        );
-        if (reg.test(value)) {
-          return null;
-        } else {
-          return value;
-        }
-      }
-      onMounted(
-        (window.onresize = function () {
-          dgHeight.value = window.innerHeight - 180;
-        })
+    DxItem,
+  },
+  setup() {
+    const user_types = [
+      { value: '1', text: '超级管理员' },
+      { value: '2', text: '管理员' },
+      { value: '3', text: '普通用户' },
+    ];
+    const { urlPrefix } = userGlobSetting();
+    const url = `${urlPrefix}/api/tenantuser`;
+    const dgHeight = ref(0);
+    const dataSource = CreateStore({
+      key: 'id',
+      loadUrl: `${url}/list`,
+      insertUrl: `${url}/create-dev`,
+      updateUrl: `${url}/update-dev`,
+      deleteUrl: `${url}/delete`,
+    });
+    function onContentReady() {
+      // document.querySelector(
+      //   '.dx-datagrid-headers .dx-datagrid-table .dx-header-row .dx-command-edit'
+      // ).innerHTML = '操作';
+    }
+    function formatGuid(value) {
+      const reg = new RegExp(
+        /^[0-9a-zA-Z]{8}[0-9a-zA-Z]{4}[0-9a-zA-Z]{4}[0-9a-zA-Z]{4}[0-9a-zA-Z]{12}$/
       );
-      return {
-        dataSource,
-        dgHeight,
-        pageNum: 20,
-        pageSizes: [5, 10, 20, 50, 100],
-        user_types,
+      if (reg.test(value)) {
+        return null;
+      } else {
+        return value;
+      }
+    }
+    onMounted(
+      (window.onresize = function () {
+        dgHeight.value = window.innerHeight - 180;
+      })
+    );
+    return {
+      dataSource,
+      dgHeight,
+      pageNum: 20,
+      pageSizes: [5, 10, 20, 50, 100],
+      user_types,
 
-        formatGuid,
-        onContentReady,
-      };
-    },
-  });
+      formatGuid,
+      onContentReady,
+    };
+  },
+});
 </script>

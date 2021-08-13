@@ -6,7 +6,7 @@ import { ErrorMessageMode } from '/#/axios';
 enum Api {
   Login = '/login',
   Logout = '/logout',
-  GetUserInfo = '/getUserInfo',
+  GetUserInfo = '/api/auth/get-login-user',
   GetPermCode = '/getPermCode',
 }
 
@@ -29,7 +29,7 @@ export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') 
  * @description: getUserInfo
  */
 export function getUserInfo() {
-  return defHttp.get<GetUserInfoModel>({ url: Api.GetUserInfo });
+  return defHttp.get({ url: Api.GetUserInfo });
 }
 
 export function getPermCode() {

@@ -18,6 +18,8 @@
   import { CreateStore } from '/@/utils/devextreme-aspnet-data-nojquery';
   import { DxColumn, DxEditing } from 'devextreme-vue/data-grid';
   import { defineComponent } from 'vue';
+  import { useGlobSetting } from '/@/hooks/setting'; // 获取env 设置的全局变量
+
   export default defineComponent({
     name: 'Application',
     components: {
@@ -26,9 +28,9 @@
       DxEditing,
     },
     setup() {
-      let http = 'https://localhost:44326';
-      const url = `${http}/api/application`;
-
+      debugger;
+      const { urlPrefix } = useGlobSetting();
+      const url = `${urlPrefix}/api/application`;
       const dataSource = CreateStore({
         key: 'id',
         loadUrl: `${url}/list`,
