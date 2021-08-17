@@ -110,7 +110,6 @@ export const useUserStore = defineStore({
       }
     },
     async getUserInfoAction(): Promise<UserInfo> {
-      debugger;
       const res = await getUserInfo();
       const userInfo = res.code == '200' ? res.data : null;
       if (userInfo) {

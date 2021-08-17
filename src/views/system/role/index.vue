@@ -1,23 +1,20 @@
 <template>
-  <Card title="角色管理">
-    <DataGrid :data-source="dataSource">
-      <DxEditing mode="row" :allow-adding="true" :allow-deleting="true" :allow-updating="true" />
-      <DxColumn data-field="code" caption="角色编码" />
-      <DxColumn data-field="name" caption="角色名称" />
-      <DxColumn data-field="sortNum" caption="排序" />
-      <DxColumn data-field="description" caption="应用描述" />
-      <DxColumn data-field="num" caption="排序" />
-      <DxColumn data-field="cbyTime" caption="创建时间" data-type="date" format="yyyy-MM-dd HH:mm:ss" />
-    </DataGrid>
-  </Card>
+  <DataGrid :data-source="dataSource">
+    <DxEditing mode="row" :allow-adding="true" :allow-deleting="true" :allow-updating="true" />
+    <DxColumn data-field="code" caption="角色编码" />
+    <DxColumn data-field="name" caption="角色名称" />
+    <DxColumn data-field="sortNum" caption="排序" />
+    <DxColumn data-field="description" caption="描述" />
+    <DxColumn data-field="num" caption="排序" />
+    <DxColumn data-field="cbyTime" caption="创建时间" data-type="date" format="yyyy-MM-dd HH:mm:ss" />
+  </DataGrid>
 </template>
 
 <script>
 import { DataGrid } from '/@/components/DxDataGrid';
-import { CreateStore } from '/@/utils/devextreme-aspnet-data-nojquery';
 import { DxColumn, DxEditing } from 'devextreme-vue/data-grid';
 import { defineComponent, ref } from 'vue';
-import { userGlobSetting } from '/@/hooks/setting';
+import { Ez } from "/@/utils/devexpress";
 
 export default defineComponent({
   name: 'Application',
@@ -30,9 +27,8 @@ export default defineComponent({
     const dataSource = ref(null);
     loadDataSource();
     function loadDataSource() {
-      const { urlPrefix } = userGlobSetting();
-      const url = `${urlPrefix}/api/role`;
-      dataSource.value = CreateStore({
+      const url = "/api/role";
+      dataSource.value = Ez.CreateStore({
         key: 'id',
         loadUrl: `${url}/list`,
         insertUrl: `${url}/create-dev`,

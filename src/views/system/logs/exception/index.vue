@@ -1,5 +1,4 @@
 <template>
-  <Card title="异常日志">
     <DxDataGrid
       :data-source="dataSource"
       ref="dataGrid"
@@ -44,7 +43,6 @@
       <DxColumn data-field="exceptionTime" caption="异常时间" />
       <DxColumn data-field="params" caption="参数" />
     </DxDataGrid>
-  </Card>
 </template>
 
 <script>
@@ -58,10 +56,9 @@ import {
 } from 'devextreme-vue/data-grid';
 import { DxItem } from 'devextreme-vue/form';
 import { onMounted, ref, defineComponent } from 'vue';
-import { CreateStore } from '/@/utils/devextreme-aspnet-data-nojquery';
 import { DxTextArea } from 'devextreme-vue/text-area';
 import { defHttp } from '/@/utils/http/axios';
-import { useGlobSetting } from '/@/hooks/setting';
+import { Ez } from "/@/utils/devexpress"
 
 export default defineComponent({
   name: 'LogSql',
@@ -81,9 +78,8 @@ export default defineComponent({
     const dgHeight = ref(0);
     loadDataSource();
     function loadDataSource() {
-      const { urlPrefix } = useGlobSetting();
-      const url = `${urlPrefix}/api/log/exception`;
-      dataSource.value = CreateStore({
+      const url = `/api/log/exception`;
+      dataSource.value = Ez.CreateStore({
         key: 'id',
         loadUrl: `${url}/list`,
       });

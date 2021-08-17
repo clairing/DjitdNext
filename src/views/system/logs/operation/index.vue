@@ -1,5 +1,4 @@
 <template>
-  <Card title="操作日志">
     <DxDataGrid
       :data-source="dataSource"
       ref="dataGrid"
@@ -52,7 +51,6 @@
       <DxColumn data-field="elapsedTime" caption="耗时" />
       <DxColumn data-field="opTime" caption="操作时间" />
     </DxDataGrid>
-  </Card>
 </template>
 
 <script>
@@ -66,10 +64,9 @@ import {
 } from 'devextreme-vue/data-grid';
 import { DxItem } from 'devextreme-vue/form';
 import { onMounted, ref, defineComponent } from 'vue';
-import { CreateStore } from '/@/utils/devextreme-aspnet-data-nojquery';
 import { DxTextArea } from 'devextreme-vue/text-area';
 import { defHttp } from '/@/utils/http/axios';
-import { useGlobSetting } from '/@/hooks/setting'; // 获取env 设置的全局变量
+import { Ez } from "/@/utils/devexpress"
 
 export default defineComponent({
   name: 'LogSql',
@@ -89,9 +86,8 @@ export default defineComponent({
     const dgHeight = ref(0);
     loadDataSource();
     function loadDataSource() {
-      const { urlPrefix } = useGlobSetting();
-      const url = `${urlPrefix}/api/log/operation`;
-      dataSource.value = CreateStore({
+      const url = `/api/log/operation`;
+      dataSource.value = Ez.CreateStore({
         key: 'id',
         loadUrl: `${url}/list`,
       });

@@ -1,96 +1,89 @@
 <template>
-  <Card title="页面管理">
-    <DxDataGrid
-      :data-source="dataSource"
-      ref="dataGrid"
-      :height="dgHeight"
-      :show-column-lines="true"
-      :show-row-lines="true"
-      :show-borders="true"
-      :row-alternation-enabled="true"
-      :focused-row-enabled="false"
-      :column-auto-width="true"
-      :column-hiding-enabled="false"
-      :column-fixing="{ enabled: true }"
-      :repaint-changes-only="true"
-      :grouping="{ autoExpandAll: true }"
-      :group-panel="{ visible: false }"
-      :scrolling="{
-        showScrollbar: 'always',
-        useNative: false,
-      }"
-      :column-resizing-mode="'widget'"
-      :selection="{ mode: 'single' }"
-      :remote-operations="{
-        paging: true,
-        filtering: true,
-        sorting: true,
-        grouping: true,
-        summary: true,
-        groupPaging: true,
-      }"
-      @content-ready="onContentReady"
-      @toolbar-preparing="onToolbarPreparing"
-      @selection-changed="onSelectionChanged"
+  <DxDataGrid
+    :data-source="dataSource"
+    ref="dataGrid"
+    :height="dgHeight"
+    :show-column-lines="true"
+    :show-row-lines="true"
+    :show-borders="true"
+    :row-alternation-enabled="true"
+    :focused-row-enabled="false"
+    :column-auto-width="true"
+    :column-hiding-enabled="false"
+    :column-fixing="{ enabled: true }"
+    :repaint-changes-only="true"
+    :grouping="{ autoExpandAll: true }"
+    :group-panel="{ visible: false }"
+    :scrolling="{
+      showScrollbar: 'always',
+      useNative: false,
+    }"
+    :column-resizing-mode="'widget'"
+    :selection="{ mode: 'single' }"
+    :remote-operations="{
+      paging: true,
+      filtering: true,
+      sorting: true,
+      grouping: true,
+      summary: true,
+      groupPaging: true,
+    }"
+    @content-ready="onContentReady"
+    @toolbar-preparing="onToolbarPreparing"
+    @selection-changed="onSelectionChanged"
+  >
+    <DxPaging :page-size="pageNum" />
+    <DxPager :show-page-size-selector="true" :show-info="true" :allowed-page-sizes="pageSizes" />
+    <DxFilterRow :visible="true" />
+    <DxEditing
+      mode="popup"
+      :allow-adding="true"
+      :allow-deleting="true"
+      :allow-updating="true"
+      :start-edit-action="'dbClick'"
+      :select-text-on-edit-start="true"
     >
-      <DxPaging :page-size="pageNum" />
-      <DxPager :show-page-size-selector="true" :show-info="true" :allowed-page-sizes="pageSizes" />
-      <DxFilterRow :visible="true" />
-      <DxEditing
-        mode="popup"
-        :allow-adding="true"
-        :allow-deleting="true"
-        :allow-updating="true"
-        :start-edit-action="'dbClick'"
-        :select-text-on-edit-start="true"
-      >
-        <DxPopup :show-title="true" :width="800" :height="475" title="页面管理" />
-        <DxForm>
-          <DxItem :col-count="2" :col-span="2" item-type="group">
-            <DxItem data-field="name" />
-            <DxItem data-field="code" />
-            <DxItem data-field="icon" />
-            <DxItem data-field="router" />
-            <DxItem data-field="component" />
-            <DxItem data-field="permission" />
-            <DxItem data-field="openType" />
-            <DxItem data-field="link" />
-            <DxItem data-field="redirect" />
-            <DxItem data-field="helpUrl" />
-            <DxItem data-field="sortNum" />
-            <DxItem data-field="enabled" />
-          </DxItem>
-        </DxForm>
-      </DxEditing>
+      <DxPopup :show-title="true" :width="800" :height="475" title="页面管理" />
+      <DxForm>
+        <DxItem :col-count="2" :col-span="2" item-type="group">
+          <DxItem data-field="name" />
+          <DxItem data-field="code" />
+          <DxItem data-field="icon" />
+          <DxItem data-field="router" />
+          <DxItem data-field="component" />
+          <DxItem data-field="permission" />
+          <DxItem data-field="openType" />
+          <DxItem data-field="link" />
+          <DxItem data-field="redirect" />
+          <DxItem data-field="helpUrl" />
+          <DxItem data-field="sortNum" />
+          <DxItem data-field="enabled" />
+        </DxItem>
+      </DxForm>
+    </DxEditing>
 
-      <DxColumn data-field="name" caption="名称" />
-      <DxColumn data-field="code" caption="编码" />
-      <DxColumn data-field="icon" caption="图标" />
-      <DxColumn data-field="router" caption="路由地址" />
-      <DxColumn data-field="component" caption="组件地址" />
-      <DxColumn data-field="permission" caption="权限标识" />
-      <DxColumn data-field="openType" caption="打开方式" />
-      <DxColumn data-field="link" caption="内链地址" />
-      <DxColumn data-field="redirect" caption="重定向地址" />
-      <DxColumn data-field="helpUrl" caption="帮助页" />
-      <DxColumn data-field="sortNum" caption="排序" />
-      <DxColumn data-field="enabled" caption="启用" />
+    <DxColumn data-field="name" caption="名称" />
+    <DxColumn data-field="code" caption="编码" />
+    <DxColumn data-field="icon" caption="图标" />
+    <DxColumn data-field="router" caption="路由地址" />
+    <DxColumn data-field="component" caption="组件地址" />
+    <DxColumn data-field="permission" caption="权限标识" />
+    <DxColumn data-field="openType" caption="打开方式" />
+    <DxColumn data-field="link" caption="内链地址" />
+    <DxColumn data-field="redirect" caption="重定向地址" />
+    <DxColumn data-field="helpUrl" caption="帮助页" />
+    <DxColumn data-field="sortNum" caption="排序" />
+    <DxColumn data-field="enabled" caption="启用" />
 
-      <DxColumn
-        data-field="expiryDateEnabled"
-        caption="启用有效期"
-        :visible="false"
-        data-type="boolean"
-      />
-      <DxColumn data-field="cbyTime" caption="创建时间" :visible="false" data-type="date" />
-      <template #expiryDateTemplate="{ data }">
-        <div>
-          {{ data.text }}
-          <span>{{ data.data.expiryDateEnabled ? '[已启用]' : '[未启用]' }}</span>
-        </div>
-      </template>
-    </DxDataGrid>
-  </Card>
+    <DxColumn data-field="expiryDateEnabled" caption="启用有效期" :visible="false" data-type="boolean" />
+    <DxColumn data-field="cbyTime" caption="创建时间" :visible="false" data-type="date" />
+    <template #expiryDateTemplate="{ data }">
+      <div>
+        {{ data.text }}
+        <span>{{ data.data.expiryDateEnabled ? '[已启用]' : '[未启用]' }}</span>
+      </div>
+    </template>
+  </DxDataGrid>
 </template>
 
 <script>
@@ -107,10 +100,10 @@ import {
 } from 'devextreme-vue/data-grid';
 import { DxItem } from 'devextreme-vue/form';
 import { onMounted, ref, defineComponent } from 'vue';
-import { CreateStore } from '/@/utils/devextreme-aspnet-data-nojquery';
+
 import { DxTextArea } from 'devextreme-vue/text-area';
 // import { defHttp } from '/@/utils/http/axios';
-// import Ez from '/@/utils/devexpress';
+import { Ez } from '/@/utils/devexpress';
 
 export default defineComponent({
   name: 'Application',
@@ -139,9 +132,8 @@ export default defineComponent({
     const selData = ref({});
     loadDataSource();
     function loadDataSource() {
-      const http = 'https://localhost:44326';
-      const url = `${http}/api/page`;
-      dataSource.value = CreateStore({
+      const url = "/api/page";
+      dataSource.value = Ez.CreateStore({
         key: 'id',
         loadUrl: `${url}/list`,
         insertUrl: `${url}/create-dev`,

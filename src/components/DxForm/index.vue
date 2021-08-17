@@ -88,146 +88,147 @@
 </template>
 
 <script>
-  //   editorType
-  // Specifies which editor UI component is used to display and edit the form item value.
+//   editorType
+// Specifies which editor UI component is used to display and edit the form item value.
 
-  // Type: String
-  // Accepted Values: 'dxAutocomplete' | 'dxCalendar' | 'dxCheckBox' | 'dxColorBox' | 'dxDateBox' | 'dxDropDownBox' | 'dxHtmlEditor' | 'dxLookup' | 'dxNumberBox' | 'dxRadioGroup' | 'dxRangeSlider' | 'dxSelectBox' | 'dxSlider' | 'dxSwitch' | 'dxTagBox' | 'dxTextArea' | 'dxTextBox'
-  import { defineComponent, onMounted, ref } from 'vue';
-  import { DxAutocomplete } from 'devextreme-vue/autocomplete';
-  import { createStore } from 'devextreme-aspnet-data-nojquery'; //远程数据源
-  // import DataSource from 'devextreme/data/data_source'; //本地化数据源'
-  // import ArrayStore from 'devextreme/data/array_store';
-  import CustomStore from 'devextreme/data/custom_store';
-  import BasicData from './jit-data.js';
-  import Ez from '/@/utils/devexpress';
-  import {
-    DxForm,
+// Type: String
+// Accepted Values: 'dxAutocomplete' | 'dxCalendar' | 'dxCheckBox' | 'dxColorBox' | 'dxDateBox' | 'dxDropDownBox' | 'dxHtmlEditor' | 'dxLookup' | 'dxNumberBox' | 'dxRadioGroup' | 'dxRangeSlider' | 'dxSelectBox' | 'dxSlider' | 'dxSwitch' | 'dxTagBox' | 'dxTextArea' | 'dxTextBox'
+import { defineComponent, onMounted, ref } from 'vue';
+import { DxAutocomplete } from 'devextreme-vue/autocomplete';
+import { createStore } from 'devextreme-aspnet-data-nojquery'; //远程数据源
+// import DataSource from 'devextreme/data/data_source'; //本地化数据源'
+// import ArrayStore from 'devextreme/data/array_store';
+import CustomStore from 'devextreme/data/custom_store';
+import BasicData from './jit-data.js';
+import { Ez } from '/@/utils/devexpress';
+import {
+  DxForm,
+  DxItem,
+  DxTab,
+  DxGroupItem,
+  DxColCountByScreen,
+  DxButtonItem,
+  DxTabbedItem,
+  DxEmptyItem,
+  DxSimpleItem,
+  DxTabPanelOptions,
+} from 'devextreme-vue/form';
+
+export default defineComponent({
+  name: 'Form',
+  components: {
     DxItem,
     DxTab,
+    DxSimpleItem,
+    DxForm,
     DxGroupItem,
-    DxColCountByScreen,
+    DxAutocomplete,
     DxButtonItem,
     DxTabbedItem,
     DxEmptyItem,
-    DxSimpleItem,
     DxTabPanelOptions,
-  } from 'devextreme-vue/form';
+    DxColCountByScreen,
+  },
+  inheritAttrs: false,
+  props: {
+    options: {
+      type: Object,
+      default: () => {
+        return {
+          POST_URL: '',
+          DATA_URL: '',
+          colCount: 0,
+          labelLocation: '',
+          colCountByScreen: [],
+          items: [],
+        };
+      },
+    },
+    id: {
+      type: String,
+      default: '',
+    },
+  },
+  setup(props) {
+    // 表单实例
+    const dxForm = ref();
+    const params = BasicData.getFormOption();
+    function handleSubmit(e) {
+      console.log(dxForm.value.instance);
+      e.preventDefault();
+    }
+    // 获取form 表单数据
+    function getData() { }
+    // console.log(dxForm.value.instance.option('formData'));
+    onMounted(() => {
+      // if (props.options) {
+      //   for (let key in props.options.hidden) {
+      //     Ez.Form.SetHiddenValue(dxForm, key, props.options.hidden[key]);
+      //   }
+      // }
+    });
+    // 特殊化处理options
+    function handleEditorOptions(editorOptions, editorType, dataField) {
+      try {
+        let _url = editorOptions.dataSource ?? '';
+        // console.log(_url);
+        switch (editorType) {
+          case 'dxAutocomplete':
+            if (_url != '') {
+              editorOptions.loadParams = {};
+              editorOptions.dataSource = new CustomStore({
+                key: 'value',
+                loadUrl: _url,
+                loadParams: function () {
+                  return Ez.Form.GetFieldValue(dxForm, dataField);
+                },
+              });
+              editorOptions.itemTemplate = function (data) {
+                return data.text;
+              };
+            }
+            break;
 
-  export default defineComponent({
-    name: 'Form',
-    components: {
-      DxItem,
-      DxTab,
-      DxSimpleItem,
-      DxForm,
-      DxGroupItem,
-      DxAutocomplete,
-      DxButtonItem,
-      DxTabbedItem,
-      DxEmptyItem,
-      DxTabPanelOptions,
-      DxColCountByScreen,
-    },
-    inheritAttrs: false,
-    props: {
-      options: {
-        type: Object,
-        default: () => {
-          return {
-            POST_URL: '',
-            DATA_URL: '',
-            colCount: 0,
-            labelLocation: '',
-            colCountByScreen: [],
-            items: [],
-          };
-        },
-      },
-      id: {
-        type: String,
-        default: '',
-      },
-    },
-    setup(props) {
-      // 表单实例
-      const dxForm = ref();
-      const params = BasicData.getFormOption();
-      function handleSubmit(e) {
-        console.log(dxForm.value.instance);
-        e.preventDefault();
-      }
-      // 获取form 表单数据
-      function getData() {}
-      // console.log(dxForm.value.instance.option('formData'));
-      onMounted(() => {
-        // if (props.options) {
-        //   for (let key in props.options.hidden) {
-        //     Ez.Form.SetHiddenValue(dxForm, key, props.options.hidden[key]);
-        //   }
-        // }
-      });
-      // 特殊化处理options
-      function handleEditorOptions(editorOptions, editorType, dataField) {
-        try {
-          let _url = editorOptions.dataSource ?? '';
-          // console.log(_url);
-          switch (editorType) {
-            case 'dxAutocomplete':
-              if (_url != '') {
-                editorOptions.loadParams = {};
-                editorOptions.dataSource = new CustomStore({
-                  key: 'value',
+          case 'dxSelectBox':
+            if (_url != '') {
+              var isLocalSource = _url.toString().indexOf('params.') === 0 ?? false;
+              var valueExpr = editorOptions.valueExpr;
+              editorOptions.dataSource = isLocalSource
+                ? null
+                : createStore({
+                  key: valueExpr,
                   loadUrl: _url,
-                  loadParams: function () {
-                    return Ez.Form.GetFieldValue(dxForm, dataField);
-                  },
                 });
-                editorOptions.itemTemplate = function (data) {
-                  return data.text;
-                };
+              if (isLocalSource) {
+                editorOptions.items = eval(_url);
               }
-              break;
-
-            case 'dxSelectBox':
-              if (_url != '') {
-                var isLocalSource = _url.toString().indexOf('params.') === 0 ?? false;
-                var valueExpr = editorOptions.valueExpr;
-                editorOptions.dataSource = isLocalSource
-                  ? null
-                  : createStore({
-                      key: valueExpr,
-                      loadUrl: _url,
-                    });
-                if (isLocalSource) {
-                  editorOptions.items = eval(_url);
-                }
-              } else {
-                return editorOptions;
-              }
-              break;
-            default:
-              break;
-          }
-          _url = '';
-          return editorOptions;
-        } catch {
-          return editorOptions;
+            } else {
+              return editorOptions;
+            }
+            break;
+          default:
+            break;
         }
+        _url = '';
+        return editorOptions;
+      } catch {
+        return editorOptions;
       }
+    }
 
-      return {
-        formId: props.id,
-        formData: {},
-        dxForm,
-        params, //海关参数
+    return {
+      formId: props.id,
+      formData: {},
+      dxForm,
+      params, //海关参数
 
-        handleEditorOptions,
-        handleSubmit,
-        getData,
-      };
-    },
-  });
+      handleEditorOptions,
+      handleSubmit,
+      getData,
+    };
+  },
+});
 </script>
 
-<style></style>
+<style>
+</style>

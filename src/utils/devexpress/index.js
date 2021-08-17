@@ -5,8 +5,10 @@ import dataSource from './data1.js';
 import { defHttp } from '/@/utils/http/axios';
 import notify from 'devextreme/ui/notify';
 import { Button } from '/@/components/DxButton';
+import { CreateStore } from '/@/utils/devextreme-aspnet-data-nojquery'; //获取数据DataGrid
+import { useGlobSetting } from '/@/hooks/setting'; // 获取env 设置的全局变量
 //Ez框架
-var Ez = {
+export var Ez = {
   Name: 'EzFramework',
   Version: 'beta v0.0.0.1',
   DevIcons:
@@ -311,30 +313,6 @@ var Ez = {
   };
 })(Ez);
 
-// typeanme json文件数据类型： 1、customs 2、nems 3、npts
-// params  json 值
-
-(function (ez) {
-  // 获取海关参数
-  ez.BasicData = function (typename, paramname) {
-    return defHttp
-      .get({ url: `/api/parameter/${typename}/${paramname}` }, { isTransformResponse: false })
-      .then((res) => {
-        return res.data;
-      });
-  };
-  // 获取token
-  ez.GetToken = function () {
-    return useUserStore().getToken;
-  };
-  // 组件转dom
-  ez.RenderComponent = function (id, comp, options) {
-    const container = document.createElement('div');
-    const vm = createVNode(comp, options);
-    render(vm, container);
-    document.querySelector(id).appendChild(container);
-  };
-})(Ez);
 
 // 消息通知
 (function (ez) {
@@ -426,4 +404,38 @@ var Ez = {
   };
 })(Ez);
 
-export default Ez;
+// typeanme json文件数据类型： 1、customs 2、nems 3、npts
+// params  json 值
+// Vue 相关功能
+(function (ez) {
+  // 获取海关参数
+  ez.BasicData = function (typename, paramname) {
+    return defHttp
+      .get({ url: `/api/parameter/${typename}/${paramname}` }, { isTransformResponse: false })
+      .then((res) => {
+        return res.data;
+      });
+  };
+  // 获取token
+  ez.GetToken = function () {
+    return useUserStore().getToken;
+  };
+  // 组件转dom
+  ez.RenderComponent = function (id, comp, options) {
+    const container = document.createElement('div');
+    const vm = createVNode(comp, options);
+    render(vm, container);
+    document.querySelector(id).appendChild(container);
+  };
+  // 获取DataGrid数据
+  ez.CreateStore = function (options) {
+    return CreateStore(options);
+  };
+  // env 设置的变量
+  ez.GlobSetting = function () {
+    return useGlobSetting();
+  }
+})(Ez);
+
+
+

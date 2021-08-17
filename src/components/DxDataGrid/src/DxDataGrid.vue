@@ -32,56 +32,63 @@
     <DxPaging :page-size="pageNum" />
     <DxPager :show-page-size-selector="true" :show-info="true" :allowed-page-sizes="pageSizes" />
     <DxFilterRow :visible="true" />
+    <DxColumnChooser :enabled="true" />
+    <DxExport :enabled="true" :allow-export-selected-data="true" />
     <slot></slot>
   </DxDataGrid>
 </template>
 
 <script>
-  import { DxDataGrid, DxPaging, DxPager, DxFilterRow } from 'devextreme-vue/data-grid';
-  import { onMounted, ref, defineComponent } from 'vue';
-  export default defineComponent({
-    name: 'DataGrid',
-    components: {
-      DxDataGrid,
-      DxPaging,
-      DxPager,
-      DxFilterRow,
+import {
+  DxDataGrid, DxPaging, DxPager, DxFilterRow, DxColumnChooser, DxExport
+} from 'devextreme-vue/data-grid';
+import { onMounted, ref, defineComponent } from 'vue';
+export default defineComponent({
+  name: 'DataGrid',
+  components: {
+    DxDataGrid,
+    DxPaging,
+    DxPager,
+    DxFilterRow,
+    DxColumnChooser,
+    DxExport
+  },
+  inheritAttrs: false,
+  props: {
+    pageSize: {
+      type: Number,
+      default: 20,
     },
-    inheritAttrs: false,
-    props: {
-      pageSize: {
-        type: Number,
-        default: 20,
-      },
-      height: {
-        type: Number,
-        default: 0,
-      },
+    height: {
+      type: Number,
+      default: 0,
     },
-    emits: ['input'],
-    setup(props, attrs) {
-      console.log(attrs);
-      const dgHeight = ref(0);
-      const pageNum = ref(20);
+  },
+  emits: ['input'],
+  setup(props, attrs) {
+    console.log(attrs);
+    const dgHeight = ref(0);
+    const pageNum = ref(20);
 
-      function onContentReady() {
-        // document.querySelector(
-        //   '.dx-datagrid-headers .dx-datagrid-table .dx-header-row .dx-command-edit'
-        // ).innerHTML = '操作';
-      }
-      onMounted(
-        (window.onresize = function () {
-          dgHeight.value = props.height > 0 ? props.height : window.innerHeight - 180;
-        })
-      );
-      return {
-        dgHeight,
-        pageNum,
-        pageSizes: [5, 10, 20, 50, 100],
-        onContentReady,
-      };
-    },
-  });
+    function onContentReady() {
+      // document.querySelector(
+      //   '.dx-datagrid-headers .dx-datagrid-table .dx-header-row .dx-command-edit'
+      // ).innerHTML = '操作';
+    }
+    onMounted(
+      (window.onresize = function () {
+        dgHeight.value = props.height > 0 ? props.height : window.innerHeight - 180;
+      })
+    );
+    return {
+      dgHeight,
+      pageNum,
+      pageSizes: [5, 10, 20, 50, 100],
+      onContentReady,
+    };
+  },
+});
 </script>
 
-<style></style>
+<style>
+</style>

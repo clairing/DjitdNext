@@ -11,7 +11,7 @@ const example: AppRouteModule = {
   meta: {
     orderNo: 90,
     icon: 'simple-icons:about-dot-me',
-    title: '系统管理',
+    title: '权限管理',
   },
   children: [
     {
@@ -24,20 +24,20 @@ const example: AppRouteModule = {
       },
     },
     {
+      path: 'application',
+      name: 'Application',
+      component: () => import('/@/views/system/application/index.vue'),
+      meta: {
+        title: '系统管理',
+        icon: '',
+      },
+    },
+    {
       path: 'user',
       name: 'User',
       component: () => import('/@/views/system/user/index.vue'),
       meta: {
         title: '用户管理',
-        icon: '',
-      },
-    },
-    {
-      path: 'application',
-      name: 'Application',
-      component: () => import('/@/views/system/application/index.vue'),
-      meta: {
-        title: '应用管理',
         icon: '',
       },
     },

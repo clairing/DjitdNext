@@ -5,9 +5,9 @@
 </template>
 
 <script>
-  import Ez from '/@/utils/devexpress';
+import { Ez } fr '/@/utils/devexpress';
   import { onMounted } from 'vue';
-  import { useGlobSetting } from '/@/hooks/setting';
+  import { useGlobSetting } fr '/@/hooks/setti';
   export default {
     setup() {
       const globSetting = useGlobSetting();
@@ -17,10 +17,11 @@
         Ez.Button.Normal('#btn', '', '测试', function () {
           alert(1);
         });
-        Ez.Button.Submit('#btn1', '提交');
+        Ez.Button.bmit('#btn1', '提交');
       });
     },
   };
-</script>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   </script>
 
-<style></style>
+<style>
+</style>

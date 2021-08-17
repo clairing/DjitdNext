@@ -6,9 +6,9 @@
 </template>
 
 <script>
-  import Ez from '/@/utils/devexpress';
+import { Ez } fr '/@/utils/devexpress';
   import { defineComponent } from 'vue';
-  import Form from '/@/components/DxForm/index.vue';
+  import Form from '/@/cponents/DxForm/iex.vue';
   export default defineComponent({
     // setup() {
     //   onMounted(() => {
@@ -17,21 +17,18 @@
     //     console.log(Ez.Form.Get('dxForm').bind(this));
     //   });
     // },
-    // setup() {
-    components: { Form },
+    // setup()     components: { Form },
     data() {},
-    mounted() {
-      this.loadData();
+    mounted()       this.loadData();
     },
     methods: {
-      loadData() {
-        Ez.Form.Init2(this, 'dxForm');
-        console.log(this.$refs);
-        // console.log(this.$refs);
-        console.log(Ez.Form.Get('dxForm'));
+      loadData()         Ez.Form.Init2(this, 'dxForm');
+        console.log(this.$refs);       // console.log(this.$refs);
+        console.log(Ez.Form.Get(xForm'));
       },
     },
   });
-</script>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   </script>
 
-<style></style>
+<style>
+</style>
