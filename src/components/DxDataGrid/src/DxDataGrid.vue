@@ -29,7 +29,7 @@
     }"
     @content-ready="onContentReady"
   >
-    <DxPaging :page-size="pageNum" />
+    <DxPaging :page-size="pageSize" />
     <DxPager :show-page-size-selector="true" :show-info="true" :allowed-page-sizes="pageSizes" />
     <DxFilterRow :visible="true" />
     <DxColumnChooser :enabled="true" />
@@ -44,7 +44,7 @@ import {
 } from 'devextreme-vue/data-grid';
 import { onMounted, ref, defineComponent } from 'vue';
 export default defineComponent({
-  name: 'DataGrid',
+  // name: 'DataGrid',
   components: {
     DxDataGrid,
     DxPaging,
@@ -53,7 +53,7 @@ export default defineComponent({
     DxColumnChooser,
     DxExport
   },
-  inheritAttrs: false,
+  inheritAttrs: true,
   props: {
     pageSize: {
       type: Number,
@@ -64,20 +64,18 @@ export default defineComponent({
       default: 0,
     },
   },
-  emits: ['input'],
-  setup(props, attrs) {
+  setup(props, { attrs }) {
     console.log(attrs);
     const dgHeight = ref(0);
     const pageNum = ref(20);
-
     function onContentReady() {
-      // document.querySelector(
-      //   '.dx-datagrid-headers .dx-datagrid-table .dx-header-row .dx-command-edit'
-      // ).innerHTML = '操作';
+      document.querySelector(
+        '.dx-datagrid-headers .dx-datagrid-table .dx-header-row .dx-command-edit'
+      ).innerHTML = '操作';
     }
     onMounted(
       (window.onresize = function () {
-        dgHeight.value = props.height > 0 ? props.height : window.innerHeight - 180;
+        dgHeight.value = props.height > 0 ? props.height : window.innerHeight - 150;
       })
     );
     return {

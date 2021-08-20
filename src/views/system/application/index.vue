@@ -1,42 +1,34 @@
 <template>
-  <DataGrid :data-source="dataSource">
-    <DxEditing mode="row" :allow-adding="true" :allow-deleting="true" :allow-updating="true" />
-    <DxColumn data-field="code" caption="系统编码" />
-    <DxColumn data-field="name" caption="系统名称" />
-    <DxColumn data-field="enName" caption="英文名称" />
-    <DxColumn data-field="description" caption="系统描述" />
-    <DxColumn data-field="isSeparated" data-type="boolean" caption="独立" />
-    <DxColumn data-field="separateSite" caption="独立站点" />
-    <DxColumn data-field="enabled" data-type="boolean" caption="失效" />
-  </DataGrid>
+  <a-row :gutter="[16, 16]">
+    <a-col :span="12">
+      <SystemManage @selectSys="onSelectSys" />
+    </a-col>
+    <a-col :span="12">
+      <TenantList :tenantId="tenantId" />
+    </a-col>
+  </a-row>
 </template>
 
 <script>
-import { DataGrid } from '/@/components/DxDataGrid';
-import { DxColumn, DxEditing } from 'devextreme-vue/data-grid';
-import { defineComponent } from 'vue';
-import { Ez } from "/@/utils/devexpress"
+
+import SystemManage from './components/SystemManage.vue';
+import TenantList from "./components/TenantList.vue"
+import { defineComponent, ref } from "vue"
 
 export default defineComponent({
   name: 'Application',
   components: {
-    DataGrid,
-    DxColumn,
-    DxEditing,
+    SystemManage,
+    TenantList
   },
   setup() {
-    const url = `/api/application`;
-    const dataSource = Ez.CreateStore({
-      key: 'id',
-      loadUrl: `${url}/list`,
-      insertUrl: `${url}/create-dev`,
-      updateUrl: `${url}/update-dev`,
-      deleteUrl: `${url}/delete`,
-    });
-
-    return {
-      dataSource,
-    };
-  },
+    // 选中系统获取租户列表
+    const tenantId = ref('');
+    function onSelectSys(data) {
+      tenantId.value = data.value.id;
+    }
+    return { onSelectSys, tenantId }
+  }
 });
 </script>
+

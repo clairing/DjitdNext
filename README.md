@@ -81,6 +81,10 @@ node_modules 修改：
 四、每次改动env 文件相关文件
     需要重启vs code 服务程序
 
+五、选择应用：
+  组件：src\layouts\default\header\index.vue
+
+
 ```
 
 问题： 8 月 4 号：

@@ -1,7 +1,7 @@
 <template>
   <DxDataGrid
-    :data-source="dataSource"
     ref="dataGrid"
+    :data-source="dataSource"
     :height="dgHeight"
     :show-column-lines="true"
     :show-row-lines="true"
@@ -32,77 +32,40 @@
     @toolbar-preparing="onToolbarPreparing"
     @selection-changed="onSelectionChanged"
   >
+    <DxEditing mode="row" :allow-adding="true" :allow-deleting="true" :allow-updating="true" />
     <DxPaging :page-size="pageNum" />
     <DxPager :show-page-size-selector="true" :show-info="true" :allowed-page-sizes="pageSizes" />
     <DxFilterRow :visible="true" />
-    <DxEditing
-      mode="popup"
-      :allow-adding="true"
-      :allow-deleting="true"
-      :allow-updating="true"
-      :start-edit-action="'dbClick'"
-      :select-text-on-edit-start="true"
-    >
-      <DxPopup :show-title="true" :width="800" :height="475" title="页面管理" />
-      <DxForm>
-        <DxItem :col-count="2" :col-span="2" item-type="group">
-          <DxItem data-field="name" />
-          <DxItem data-field="code" />
-          <DxItem data-field="icon" />
-          <DxItem data-field="router" />
-          <DxItem data-field="component" />
-          <DxItem data-field="permission" />
-          <DxItem data-field="openType" />
-          <DxItem data-field="link" />
-          <DxItem data-field="redirect" />
-          <DxItem data-field="helpUrl" />
-          <DxItem data-field="sortNum" />
-          <DxItem data-field="enabled" />
-        </DxItem>
-      </DxForm>
-    </DxEditing>
+    <DxColumnChooser :enabled="true" />
+    <DxExport :enabled="true" :allow-export-selected-data="true" />
 
-    <DxColumn data-field="name" caption="名称" />
-    <DxColumn data-field="code" caption="编码" />
-    <DxColumn data-field="icon" caption="图标" />
-    <DxColumn data-field="router" caption="路由地址" />
-    <DxColumn data-field="component" caption="组件地址" />
-    <DxColumn data-field="permission" caption="权限标识" />
-    <DxColumn data-field="openType" caption="打开方式" />
-    <DxColumn data-field="link" caption="内链地址" />
-    <DxColumn data-field="redirect" caption="重定向地址" />
-    <DxColumn data-field="helpUrl" caption="帮助页" />
-    <DxColumn data-field="sortNum" caption="排序" />
-    <DxColumn data-field="enabled" caption="启用" data-type="boolean" />
-
-    <DxColumn data-field="expiryDateEnabled" caption="启用有效期" :visible="false" data-type="boolean" />
-    <DxColumn data-field="cbyTime" caption="创建时间" :visible="false" data-type="date" />
-    <template #expiryDateTemplate="{ data }">
-      <div>
-        {{ data.text }}
-        <span>{{ data.data.expiryDateEnabled ? '[已启用]' : '[未启用]' }}</span>
-      </div>
-    </template>
+    <DxColumn data-field="code" caption="系统编码" />
+    <DxColumn data-field="name" caption="系统名称" />
+    <DxColumn data-field="enName" caption="英文名称" />
+    <DxColumn data-field="description" caption="系统描述" />
+    <DxColumn data-field="isSeparated" data-type="boolean" caption="独立" />
+    <DxColumn data-field="separateSite" caption="独立站点" />
+    <DxColumn data-field="enabled" data-type="boolean" caption="启用" />
   </DxDataGrid>
+  <a-alert v-if="selData.name" :message="'当前选中系统：' + selData.name" type="info" />
 </template>
 
 <script>
 import {
-  DxDataGrid,
   DxColumn,
+  DxDataGrid,
   DxLookup,
+  DxEditing,
+  DxForm,
   DxPaging,
   DxPager,
-  DxPopup,
-  DxEditing,
   DxFilterRow,
-  DxForm,
+  DxColumnChooser,
+  DxExport
 } from 'devextreme-vue/data-grid';
 import { DxItem } from 'devextreme-vue/form';
-import { onMounted, ref, defineComponent } from 'vue';
-
-import { DxTextArea } from 'devextreme-vue/text-area';
-// import { defHttp } from '/@/utils/http/axios';
+import { ref, defineComponent, onMounted } from 'vue';
+import { defHttp } from '/@/utils/http/axios';
 import { Ez } from '/@/utils/devexpress';
 
 export default defineComponent({
@@ -111,34 +74,42 @@ export default defineComponent({
     DxDataGrid,
     DxColumn,
     DxLookup,
-    DxPaging,
-    DxPager,
-    DxPopup,
     DxEditing,
-    DxFilterRow,
     DxForm,
     DxItem,
-    DxTextArea,
+    DxPaging,
+    DxPager,
+    DxFilterRow,
+    DxColumnChooser,
+    DxExport
   },
-  setup() {
-    const user_types = [
-      { value: '1', text: '超级管理员' },
-      { value: '2', text: '管理员' },
-      { value: '3', text: '普通用户' },
+  emits: { 'selectSys': {} },
+  setup(props, { emit }) {
+    const tenant_types = [
+      { value: 1, text: '系统' },
+      { value: 3, text: '正式' },
+      { value: 2, text: '测试' },
+      { value: 4, text: '体验' },
+      { value: 0, text: '未知' },
     ];
     const dataGrid = ref(null);
+    const dgHeight = ref(null);
     const dataSource = ref(null);
-    const dgHeight = ref(0);
     const selData = ref({});
     loadDataSource();
     function loadDataSource() {
-      const url = "/api/page";
+      const url = `/api/application`;
       dataSource.value = Ez.CreateStore({
         key: 'id',
         loadUrl: `${url}/list`,
         insertUrl: `${url}/create-dev`,
         updateUrl: `${url}/update-dev`,
         deleteUrl: `${url}/delete`,
+        onRemoved: function (key) {
+          if (key == selData.value?.id) {
+            selData.value = ref({});
+          }
+        }
       });
     }
     function onToolbarPreparing(e) {
@@ -163,13 +134,13 @@ export default defineComponent({
             width: 150,
             type: 'default',
             icon: '',
-            text: '设置',
+            text: '复制',
             onClick: () => {
-              // if (!selData.value?.id) {
-              //   Ez.Notify('请先选中一条数据后再操作！');
-              // } else {
-              //   defHttp.post({ url: `/api/tenant/reset-connection-string/${selData.value.id}` });
-              // }
+              if (!selData.value?.id) {
+                Ez.Notify('请先选中一条数据后再操作！');
+              } else {
+                defHttp.post({ url: `/api/tenant/reset-connection-string/${selData.value.id}` });
+              }
             },
           },
         }
@@ -180,22 +151,25 @@ export default defineComponent({
         '.dx-datagrid-headers .dx-datagrid-table .dx-header-row .dx-command-edit'
       ).innerHTML = '操作';
     }
+    // 选中数据
     function onSelectionChanged({ selectedRowsData }) {
       console.log(selectedRowsData);
       selData.value = selectedRowsData[0];
+      emit("selectSys", selData);
     }
     onMounted(
       (window.onresize = function () {
-        dgHeight.value = window.innerHeight - 180;
+        dgHeight.value = window.innerHeight - 150;
       })
     );
     return {
       dataGrid,
-      dataSource,
       dgHeight,
+      dataSource,
       pageNum: 20,
       pageSizes: [5, 10, 20, 50, 100],
-      user_types,
+      tenant_types,
+      selData,
       onContentReady,
       onToolbarPreparing,
       onSelectionChanged,
@@ -203,3 +177,5 @@ export default defineComponent({
   },
 });
 </script>
+
+

@@ -3,7 +3,7 @@
   <DxDataGrid
     :data-source="dataSource"
     ref="dataGrid"
-    :height="dgHeight"
+    :height="height"
     :show-column-lines="true"
     :show-row-lines="true"
     :show-borders="true"
@@ -53,7 +53,7 @@
           <DxItem data-field="jobGroup" />
         </DxItem>
         <DxItem :col-count="2" :col-span="2" item-type="group">
-          <DxItem data-field="interval" />
+          <DxItem data-field="cron" />
           <DxSimpleItem>
             <template #default>
               <a
@@ -64,19 +64,30 @@
             </template>
           </DxSimpleItem>
         </DxItem>
+
+        <DxItem :col-count="2" :col-span="2" item-type="group">
+          <DxItem data-field="doOnce" />
+          <DxItem data-field="startNow" />
+          <DxItem data-field="interval" />
+          <DxItem data-field="executeType" />
+          <DxItem data-field="timerType" />
+          <DxItem data-field="requestType" />
+          <DxItem data-field="requestUrl" />
+          <DxItem data-field="requestParameters" />
+          <DxItem data-field="enabled" />
+        </DxItem>
         <DxItem :col-span="2" :col-count="2" data-field="description" />
-        <DxItem data-field="cron" :col-span="2" />
       </DxForm>
     </DxEditing>
 
     <DxPager :show-page-size-selector="true" :show-info="true" :allowed-page-sizes="pageSizes" />
 
     <DxColumn data-field="tenantId" caption="租户" />
-    <DxColumn data-field="jobName" caption="作业名称" :allow-filtering="false" :width="150" />
+    <DxColumn data-field="jobName" caption="作业名称" :width="150" />
     <DxColumn data-field="jobGroup" caption="作业组" />
-    <DxColumn data-field="doOnce" caption="只执行一次" />
-    <DxColumn data-field="startNow" caption="立即执行" :allow-filtering="false" :width="150" />
-    <DxColumn data-field="interval" caption="执行间隔时间" :visible="false" />
+    <DxColumn data-field="doOnce" caption="只执行一次" :width="100" />
+    <DxColumn data-field="startNow" caption="立即执行" :width="100" />
+    <DxColumn data-field="interval" caption="执行间隔时间" />
     <DxColumn data-field="cron" caption="Cron表达式" />
     <DxColumn data-field="executeType" caption="执行类型" />
     <DxColumn data-field="timerType" caption="定时器类型" />
@@ -145,14 +156,13 @@ export default {
     const statusArr = [{ value: "offline", text: "离线", editable: false }, { value: "normal", text: "正常", editable: true }, { value: "suspend", text: "暂停", editable: true }, { value: "abnormal", text: "异常", editable: false }]
     const task_ways = [{ value: "local", text: "本地任务" }, { value: "restful", text: "Restful任务" }]
     const local_types = [{ value: "dll", text: "dll" }, { value: "exe", text: "exe" }]
-    const taskDetailVisible = ref(false);
+    const taskDetailVisible = ref(false);// 任务详情
     var selData = reactive({ jobid: "" })
     const type = ref("")
     const statusId = ref(0)
     const editRowKey = ref(0);//编辑的key
     const height = ref(0)//dataGrid的高度
     const popoverVisible = ref(false)
-    const colorPriority = ref(statusArr[0].value)
     const params = reactive({ "tenant": '' })
     // const store = useStore()
     // console.log(store);
@@ -349,7 +359,6 @@ export default {
       changes,
       tempType,
       local_types,
-      colorPriority,
       statusText,
       statusValue,
       onContentReady,

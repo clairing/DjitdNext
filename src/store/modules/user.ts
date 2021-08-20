@@ -87,7 +87,6 @@ export const useUserStore = defineStore({
         this.setToken(token);
         // get user info        获取用户信息
         const userInfo = await this.getUserInfoAction();
-        debugger;
         // const userInfo = data;
         const sessionTimeout = this.sessionTimeout;
         if (sessionTimeout) {

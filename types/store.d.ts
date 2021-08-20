@@ -39,6 +39,26 @@ export interface UserInfo {
   homePath?: string;
   roles?: RoleInfo[];
   superAdmin: bool;
+  applicationId?: striing;
+  applicationCode?: striing;
+  applicationName?: striing;
+  allowApplications?: Array;
+  tenantId: string;
+  tenantAid?: string;
+  tenantCode?: string;
+  tenantName: string;
+  organizationId: string;
+  organizationAid?: string;
+  organizationName?: string;
+  organizationCode?: string;
+  organizationType: number;
+  organizationTypeCode?: string;
+  authToken: string;
+  departments: [];
+  departmentDatas: [];
+  employeeId?: any;
+  employeeName?: any;
+  employeeCode?: any;
 }
 
 export interface BeforeMiniState {

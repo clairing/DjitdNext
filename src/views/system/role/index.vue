@@ -1,5 +1,5 @@
 <template>
-  <DataGrid :data-source="dataSource">
+  <DataGrid :data-source="dataSource" :page-size="20">
     <DxEditing mode="row" :allow-adding="true" :allow-deleting="true" :allow-updating="true" />
     <DxColumn data-field="code" caption="角色编码" />
     <DxColumn data-field="name" caption="角色名称" />

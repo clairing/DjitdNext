@@ -7,11 +7,14 @@ import {
   Button as AntButton,
   Input,
   List,
+  Row,
+  Col,
+  Alert,
 } from 'ant-design-vue';
 
 import { App } from 'vue';
 
-const compList = [Icon, AntButton.Group, Card, List];
+const compList = [Icon, AntButton.Group, Card, List, Col, Row, Alert];
 
 export function registerGlobComp(app: App) {
   compList.forEach((comp: any) => {
