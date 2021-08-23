@@ -4,26 +4,26 @@
 </template>
 
 <script>
-import { Ez } fr '/@/utils/devexpress';
-  import { defineComponent, ref, onMounted } from 'vue';
-  importorm from '/@/comnents/DxForm/index.vue';
+import { Ez } from '/@/utils/devexpress';
+import { defineComponent, ref, onMounted } from 'vue';
+import Form from '/@/components/DxForm/index.vue';
 
-  // import dataSource from './data1';
-  export default defineComponent({
-    name: 'Form',
-    components: { Form },
-    setup() {
-      const dxForm = ref();
-      onMounted(() => {});
-      const options = Ez.Form.Init2('');
-      function getData()         // console.log(Ez.Form.Get(dxForm).formData);
+// import dataSource from './data1';
+export default defineComponent({
+  name: 'Form',
+  components: { Form },
+  setup() {
+    const dxForm = ref();
+    onMounted(() => { });
+    const options = Ez.Form.Init2('');
+    function getData() {
       console.log(Ez.Form.Get(dxForm));
-        // console.log(Form.instance);
-      }
-      return { dxForm, options, getData };
-    
-  });
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   </script>
+    }         // console.log(Ez.Form.Get(dxForm).formData);
+    // console.log(Form.instance);
+    return { dxForm, options, getData };
+  }
+});
+</script>
 
 <style>
 </style>

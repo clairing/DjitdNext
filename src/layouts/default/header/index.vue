@@ -18,7 +18,7 @@
         :sider="false"
       />
       <ApplicationButton :theme="getHeaderTheme" />
-      <div class="sys-name">点捷达平台管理系统</div>
+      <div class="sys-name">{{ userinfo.applicationName || "【请选择应用】" }}</div>
       <LayoutBreadcrumb v-if="getShowContent && getShowBread" :theme="getHeaderTheme" />
     </div>
     <!-- left end -->
@@ -73,6 +73,7 @@ import { AppSearch } from '/@/components/Application';
 import { useHeaderSetting } from '/@/hooks/setting/useHeaderSetting';
 import { useMenuSetting } from '/@/hooks/setting/useMenuSetting';
 import { useRootSetting } from '/@/hooks/setting/useRootSetting';
+import { useUserStore } from '/@/store/modules/user';
 
 import { MenuModeEnum, MenuSplitTyeEnum } from '/@/enums/menuEnum';
 import { SettingButtonPositionEnum } from '/@/enums/appEnum';
@@ -175,6 +176,10 @@ export default defineComponent({
       return unref(getSplit) ? MenuModeEnum.HORIZONTAL : null;
     });
 
+    // 用户上下文
+    const userStore = useUserStore();
+    const userinfo = computed(() => userStore.getUserInfo);
+
     return {
       prefixCls,
       getHeaderClass,
@@ -197,6 +202,8 @@ export default defineComponent({
       getShowSettingButton,
       getShowSetting,
       getShowSearch,
+
+      userinfo
     };
   },
 });

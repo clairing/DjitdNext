@@ -275,7 +275,7 @@ import DxDateBox from 'devextreme-vue/date-box';
 import { DxItem, DxSimpleItem } from 'devextreme-vue/form'
 import { DxPopup as Popup } from 'devextreme-vue/popup'
 import { ref, computed, onMounted, reactive, watch } from 'vue'
-import LogDetail from '../components/LogDetail.vue'
+import LogDetail from '../../components/LogDetail.vue'
 import notify from 'devextreme/ui/notify'
 import { createStore } from "devextreme-aspnet-data-nojquery"
 import { getCurrentInstance } from 'vue'
