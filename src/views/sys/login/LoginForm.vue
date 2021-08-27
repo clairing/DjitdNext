@@ -172,10 +172,12 @@ export default defineComponent({
           content:
             (function () {
               let resMsg = '';
-              if (error.constructor === Array) {
-                for (var item of error) {
-                  resMsg += item.messages;
-                }
+              if (error.constructor === Object) {
+                Object.keys(error).forEach(function (key) {
+                  error[key].forEach(function (item) {
+                    resMsg += item + "<br/>";
+                  });
+                })
               } else {
                 if (error.code == "ECONNABORTED") {
                   return t('sys.api.timeoutMessage');

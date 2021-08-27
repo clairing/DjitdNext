@@ -15,7 +15,7 @@
     :grouping="{ autoExpandAll: true }"
     :group-panel="{ visible: false }"
     :scrolling="{
-      showScrollbar: 'always',
+      showScrollbar: 'auto',
       useNative: false,
     }"
     :column-resizing-mode="'widget'"

@@ -1,5 +1,5 @@
 <template>
-  <dx-column v-bind="$props" />
+  <DxColumn />
 </template>
 <script lang="ts">
   import { DxColumn } from 'devextreme-vue/data-grid';

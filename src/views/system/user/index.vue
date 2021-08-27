@@ -28,6 +28,7 @@
       groupPaging: true,
     }"
     @content-ready="onContentReady"
+    @toolbar-preparing="onToolbarPreparing"
   >
     <DxPaging :page-size="pageNum" />
     <DxPager :show-page-size-selector="true" :show-info="true" :allowed-page-sizes="pageSizes" />
@@ -83,8 +84,18 @@
     />
 
     <DxColumn data-field="enabled" caption="是否启用" data-type="boolean" />
-    <DxColumn data-field="phoneNumVerified" caption="手机号是否验证" data-type="boolean" :visible="false" />
-    <DxColumn data-field="emailVerified" caption="邮箱是否验证" data-type="boolean" :visible="false" />
+    <DxColumn
+      data-field="phoneNumVerified"
+      caption="手机号是否验证"
+      data-type="boolean"
+      :visible="false"
+    />
+    <DxColumn
+      data-field="emailVerified"
+      caption="邮箱是否验证"
+      data-type="boolean"
+      :visible="false"
+    />
     <DxColumn
       data-field="expiryDateEnabled"
       caption="是否启用用户有效期"
@@ -101,25 +112,17 @@
 
     <template #phoneTemplate="{ data }">
       <div>
-        {{
-          formatGuid(data.text)
-        }}
+        {{ formatGuid(data.text) }}
         <span v-if="formatGuid(data.text)">
-          {{
-            data.data.emailVerified ? '[已验证]' : '[未验证]'
-          }}
+          {{ data.data.emailVerified ? '[已验证]' : '[未验证]' }}
         </span>
       </div>
     </template>
     <template #emailTemplate="{ data }">
       <div>
-        {{
-          formatGuid(data.text)
-        }}
+        {{ formatGuid(data.text) }}
         <span v-if="formatGuid(data.text)">
-          {{
-            data.data.emailVerified ? '[已验证]' : '[未验证]'
-          }}
+          {{ data.data.emailVerified ? '[已验证]' : '[未验证]' }}
         </span>
       </div>
     </template>
@@ -131,33 +134,27 @@
     </template>
     <template #passwordDateTemplate="{ data }">
       <div>
-        {{
-          data.text
-        }}
+        {{ data.text }}
         <span>{{ data.data.passwordExpiryDateEnabled ? '[已启用]' : '[未启用]' }}</span>
+      </div>
+    </template>
+
+    <template #toolBar>
+      <div>
+        <DxSelectBox
+          display-expr="name"
+          value-expr="id"
+          width="200"
+          :data-source="tenantsData"
+          v-model:value="loadParams.tenantId"
+        />
       </div>
     </template>
   </DxDataGrid>
 </template>
 
 <script>
-import {
-  DxDataGrid,
-  DxColumn,
-  DxLookup,
-  DxPaging,
-  DxPager,
-  DxPopup,
-  DxEditing,
-  DxFilterRow,
-  DxForm,
-} from 'devextreme-vue/data-grid';
-import { DxItem } from 'devextreme-vue/form';
-import { onMounted, ref, defineComponent } from 'vue';
-import { Ez } from "/@/utils/devexpress"
-export default defineComponent({
-  name: 'Application',
-  components: {
+  import {
     DxDataGrid,
     DxColumn,
     DxLookup,
@@ -167,54 +164,103 @@ export default defineComponent({
     DxEditing,
     DxFilterRow,
     DxForm,
-    DxItem,
-  },
-  setup() {
-    const user_types = [
-      { value: '1', text: '超级管理员' },
-      { value: '2', text: '管理员' },
-      { value: '3', text: '普通用户' },
-    ];
+  } from 'devextreme-vue/data-grid';
+  import { DxItem } from 'devextreme-vue/form';
+  import DxSelectBox from 'devextreme-vue/select-box';
+  import { onMounted, ref, defineComponent, watchEffect, reactive } from 'vue';
+  import { Ez } from '/@/utils/devexpress';
 
-    const dgHeight = ref(0);
-    const url = `/api/tenantuser`;
-    const dataSource = Ez.CreateStore({
-      key: 'id',
-      loadUrl: `${url}/list`,
-      insertUrl: `${url}/create-dev`,
-      updateUrl: `${url}/update-dev`,
-      deleteUrl: `${url}/delete`,
-    });
-    function onContentReady() {
-      // document.querySelector(
-      //   '.dx-datagrid-headers .dx-datagrid-table .dx-header-row .dx-command-edit'
-      // ).innerHTML = '操作';
-    }
-    function formatGuid(value) {
-      const reg = new RegExp(
-        /^[0-9a-zA-Z]{8}[0-9a-zA-Z]{4}[0-9a-zA-Z]{4}[0-9a-zA-Z]{4}[0-9a-zA-Z]{12}$/
-      );
-      if (reg.test(value)) {
-        return null;
-      } else {
-        return value;
+  export default defineComponent({
+    name: 'Application',
+    components: {
+      DxDataGrid,
+      DxColumn,
+      DxLookup,
+      DxPaging,
+      DxPager,
+      DxPopup,
+      DxEditing,
+      DxFilterRow,
+      DxForm,
+      DxItem,
+      DxSelectBox,
+    },
+    setup() {
+      const user_types = [
+        { value: '1', text: '超级管理员' },
+        { value: '2', text: '管理员' },
+        { value: '3', text: '普通用户' },
+      ];
+      const dgHeight = ref(0);
+
+      const dataSource = ref(null);
+      const loadParams = reactive({ tenantId: '' });
+      const tenantsData = [
+        {
+          id: 'c91c48134fc4f3403d78b62b294f1309',
+          code: 'SYSTEM',
+          name: '基层系统租户',
+          tenantType: 1,
+        },
+        {
+          id: 'c91c48134fc4f3403d78b62b294f1310',
+          code: 'ADMIN',
+          name: '管理系统租户',
+          tenantType: 3,
+        },
+      ];
+
+      const formatGuid = Ez.FormatGuid();
+      //  Ez.TenantsData() 返回的是promise对象，结果只能通过then链式调用
+      // Ez.TenantsData().then((res) => { tenantsData.value = res; });
+
+      watchEffect(() => {
+        const url = `/api/tenant/user`;
+        dataSource.value = Ez.CreateStore({
+          key: 'id',
+          loadUrl: `${url}/list`,
+          loadParams: { ...loadParams },
+          insertUrl: `${url}/create-dev`,
+          updateUrl: `${url}/update-dev`,
+          deleteUrl: `${url}/delete`,
+        });
+      });
+      // function handelTenantSelect(data) {
+      //   // loadParams.tenantId = data?.value;
+      // }
+
+      function onContentReady() {
+        document.querySelector(
+          '.dx-datagrid-headers .dx-datagrid-table .dx-header-row .dx-command-edit'
+        ).innerHTML = '操作';
       }
-    }
-    onMounted(
-      (window.onresize = function () {
-        dgHeight.value = window.innerHeight - 180;
-      })
-    );
-    return {
-      dataSource,
-      dgHeight,
-      pageNum: 20,
-      pageSizes: [5, 10, 20, 50, 100],
-      user_types,
 
-      formatGuid,
-      onContentReady,
-    };
-  },
-});
+      function onToolbarPreparing(e) {
+        e.toolbarOptions.items.unshift({
+          location: 'before',
+          template: 'toolBar',
+        });
+      }
+
+      onMounted(
+        (window.onresize = function () {
+          dgHeight.value = window.innerHeight - 180;
+        })
+      );
+      return {
+        dataSource,
+        loadParams,
+        dgHeight,
+        pageNum: 20,
+        pageSizes: [5, 10, 20, 50, 100],
+        user_types,
+
+        tenantsData,
+        formatGuid,
+        onContentReady,
+        onToolbarPreparing,
+        // handelTenantSelect
+      };
+    },
+  });
 </script>

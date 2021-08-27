@@ -18,6 +18,11 @@
       showScrollbar: 'always',
       useNative: false,
     }"
+    :key-board-navigation="{
+      enterKeyAction: 'moveFocus',
+      enterKeyDirection: 'row',
+      editOnKeyPress: true
+    }"
     :column-resizing-mode="'widget'"
     :selection="{ mode: 'single' }"
     :remote-operations="{
@@ -40,7 +45,12 @@
     <DxColumn data-field="ip" caption="IP" />
     <DxColumn data-field="browser" caption="浏览器" />
     <DxColumn data-field="visType" caption="访问类型" />
-    <DxColumn data-field="visTime" caption="访问时间" />
+    <DxColumn
+      data-field="visTime"
+      caption="访问时间"
+      data-type="datetime"
+      format="yyyy-MM-dd HH:mm:ss"
+    />
   </DxDataGrid>
 </template>
 
@@ -120,9 +130,7 @@ export default defineComponent({
       );
     }
     function onContentReady() {
-      document.querySelector(
-        '.dx-datagrid-headers .dx-datagrid-table .dx-header-row .dx-command-edit'
-      ).innerHTML = '操作';
+
     }
     onMounted(
       (window.onresize = function () {
@@ -133,7 +141,7 @@ export default defineComponent({
       dataGrid,
       dataSource,
       dgHeight,
-      pageNum: 20,
+      pageNum: 1,
       pageSizes: [5, 10, 20, 50, 100],
       onContentReady,
       onToolbarPreparing,

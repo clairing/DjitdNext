@@ -1,48 +1,58 @@
 <template>
-    <DxDataGrid
-      :data-source="dataSource"
-      ref="dataGrid"
-      :height="dgHeight"
-      :show-column-lines="true"
-      :show-row-lines="true"
-      :show-borders="true"
-      :row-alternation-enabled="true"
-      :focused-row-enabled="false"
-      :column-auto-width="true"
-      :column-hiding-enabled="false"
-      :column-fixing="{ enabled: true }"
-      :repaint-changes-only="true"
-      :grouping="{ autoExpandAll: true }"
-      :group-panel="{ visible: false }"
-      :scrolling="{
-        showScrollbar: 'always',
-        useNative: false,
-      }"
-      :column-resizing-mode="'widget'"
-      :selection="{ mode: 'single' }"
-      :remote-operations="{
-        paging: true,
-        filtering: true,
-        sorting: true,
-        grouping: true,
-        summary: true,
-        groupPaging: true,
-      }"
-      @content-ready="onContentReady"
-      @toolbar-preparing="onToolbarPreparing"
-    >
-      <DxPaging :page-size="pageNum" />
-      <DxPager :show-page-size-selector="true" :show-info="true" :allowed-page-sizes="pageSizes" />
-      <DxFilterRow :visible="true" />
-      <DxColumn data-field="name" caption="名称" />
-      <DxColumn data-field="className" caption="类名" />
-      <DxColumn data-field="methodName" caption="方法名" />
-      <DxColumn data-field="exceptionMsg" caption="异常信息" />
-      <DxColumn data-field="exceptionSource" caption="异常源" />
-      <DxColumn data-field="stackTrace" caption="堆栈信息" />
-      <DxColumn data-field="exceptionTime" caption="异常时间" />
-      <DxColumn data-field="params" caption="参数" />
-    </DxDataGrid>
+  <DxDataGrid
+    :data-source="dataSource"
+    ref="dataGrid"
+    :height="dgHeight"
+    :show-column-lines="true"
+    :show-row-lines="true"
+    :show-borders="true"
+    :row-alternation-enabled="true"
+    :focused-row-enabled="false"
+    :column-auto-width="true"
+    :column-hiding-enabled="false"
+    :column-fixing="{ enabled: true }"
+    :repaint-changes-only="true"
+    :grouping="{ autoExpandAll: true }"
+    :group-panel="{ visible: false }"
+    :scrolling="{
+      showScrollbar: 'always',
+      useNative: false,
+    }"
+    :key-board-navigation="{
+      enterKeyAction: 'moveFocus',
+      enterKeyDirection: 'row',
+      editOnKeyPress: true
+    }"
+    :column-resizing-mode="'widget'"
+    :selection="{ mode: 'single' }"
+    :remote-operations="{
+      paging: true,
+      filtering: true,
+      sorting: true,
+      grouping: true,
+      summary: true,
+      groupPaging: true,
+    }"
+    @content-ready="onContentReady"
+    @toolbar-preparing="onToolbarPreparing"
+  >
+    <DxPaging :page-size="pageNum" />
+    <DxPager :show-page-size-selector="true" :show-info="true" :allowed-page-sizes="pageSizes" />
+    <DxFilterRow :visible="true" />
+    <DxColumn data-field="name" caption="名称" />
+    <DxColumn data-field="className" caption="类名" />
+    <DxColumn data-field="methodName" caption="方法名" />
+    <DxColumn data-field="exceptionMsg" caption="异常信息" />
+    <DxColumn data-field="exceptionSource" caption="异常源" />
+    <DxColumn data-field="stackTrace" caption="堆栈信息" width="300" />
+    <DxColumn
+      data-field="exceptionTime"
+      caption="异常时间"
+      data-type="datetime"
+      format="yyyy-MM-dd HH:mm:ss"
+    />
+    <DxColumn data-field="params" caption="参数" width="300" />
+  </DxDataGrid>
 </template>
 
 <script>
@@ -115,9 +125,7 @@ export default defineComponent({
       );
     }
     function onContentReady() {
-      document.querySelector(
-        '.dx-datagrid-headers .dx-datagrid-table .dx-header-row .dx-command-edit'
-      ).innerHTML = '操作';
+
     }
     onMounted(
       (window.onresize = function () {

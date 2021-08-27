@@ -404,11 +404,12 @@ export var Ez = {
   };
 })(Ez);
 
-// typeanme json文件数据类型： 1、customs 2、nems 3、npts
-// params  json 值
+
 // Vue 相关功能
 (function (ez) {
   // 获取海关参数
+  // typeanme json文件数据类型： 1、customs 2、nems 3、npts
+  // params  json 值
   ez.BasicData = function (typename, paramname) {
     return defHttp
       .get({ url: `/api/parameter/${typename}/${paramname}` }, { isTransformResponse: false })
@@ -435,6 +436,50 @@ export var Ez = {
   ez.GlobSetting = function () {
     return useGlobSetting();
   }
+  // 租户数据
+  ez.TenantsData = function (searchValue) {
+    let data = defHttp
+      .get({ url: `/api/tenant/user/tenants?SearchValue=` + (searchValue ? searchValue : '') }, { isTransformResponse: false })
+      .then((res) => {
+        return res.data;
+      }).catch(function (error) {
+        console.log(error)
+        return null;
+      });
+    return data;
+  };
+
+  //Guid操作1：判断是否是GUID
+  ez.IsGuid = function (value) {
+    const reg = new RegExp(
+      /^[0-9a-zA-Z]{8}[0-9a-zA-Z]{4}[0-9a-zA-Z]{4}[0-9a-zA-Z]{4}[0-9a-zA-Z]{12}$/
+    );
+    return reg.test(value);
+  }
+
+  //Guid操作2：返回不是Guid的值
+  ez.FormatGuid = function (value) {
+    return this.IsGuid(value) ? null : value;
+  }
+  // 存储仓库
+  ez.Storage = {
+    Set: function (key, value) {
+      return defHttp
+        .post({ url: `/api/storage/set-state`, params: { key, value } }, { isTransformResponse: false })
+        .then((res) => {
+          return res
+        });
+    },
+    Get: function (key) {
+      return defHttp
+        .post({ url: `/api/storage/state/` + key }, { isTransformResponse: false })
+        .then((res) => {
+          return res.data
+        });
+    }
+  }
+
+
 })(Ez);
 
 

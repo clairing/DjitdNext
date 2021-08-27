@@ -1,77 +1,77 @@
 <template>
-    <DxDataGrid
-      :data-source="dataSource"
-      ref="dataGrid"
-      :height="dgHeight"
-      :show-column-lines="true"
-      :show-row-lines="true"
-      :show-borders="true"
-      :row-alternation-enabled="true"
-      :focused-row-enabled="false"
-      :column-auto-width="true"
-      :column-hiding-enabled="false"
-      :column-fixing="{ enabled: true }"
-      :repaint-changes-only="true"
-      :grouping="{ autoExpandAll: true }"
-      :group-panel="{ visible: false }"
-      :scrolling="{
-        showScrollbar: 'always',
-        useNative: false,
-      }"
-      :column-resizing-mode="'widget'"
-      :selection="{ mode: 'single' }"
-      :remote-operations="{
-        paging: true,
-        filtering: true,
-        sorting: true,
-        grouping: true,
-        summary: true,
-        groupPaging: true,
-      }"
-      @content-ready="onContentReady"
-      @toolbar-preparing="onToolbarPreparing"
+  <DxDataGrid
+    :data-source="dataSource"
+    ref="dataGrid"
+    :height="dgHeight"
+    :show-column-lines="true"
+    :show-row-lines="true"
+    :show-borders="true"
+    :row-alternation-enabled="true"
+    :focused-row-enabled="false"
+    :column-auto-width="true"
+    :column-hiding-enabled="false"
+    :column-fixing="{ enabled: true }"
+    :repaint-changes-only="true"
+    :grouping="{ autoExpandAll: true }"
+    :group-panel="{ visible: false }"
+    :scrolling="{
+      showScrollbar: 'always',
+      useNative: false,
+    }"
+    :column-resizing-mode="'widget'"
+    :selection="{ mode: 'single' }"
+    :remote-operations="{
+      paging: true,
+      filtering: true,
+      sorting: true,
+      grouping: true,
+      summary: true,
+      groupPaging: true,
+    }"
+    @content-ready="onContentReady"
+    @toolbar-preparing="onToolbarPreparing"
+  >
+    <DxPaging :page-size="pageNum" />
+    <DxPager :show-page-size-selector="true" :show-info="true" :allowed-page-sizes="pageSizes" />
+    <DxFilterRow :visible="true" />
+    <DxEditing
+      mode="popup"
+      :allow-adding="true"
+      :allow-deleting="true"
+      :allow-updating="true"
+      :start-edit-action="'dbClick'"
+      :select-text-on-edit-start="true"
     >
-      <DxPaging :page-size="pageNum" />
-      <DxPager :show-page-size-selector="true" :show-info="true" :allowed-page-sizes="pageSizes" />
-      <DxFilterRow :visible="true" />
-      <DxEditing
-        mode="popup"
-        :allow-adding="true"
-        :allow-deleting="true"
-        :allow-updating="true"
-        :start-edit-action="'dbClick'"
-        :select-text-on-edit-start="true"
-      >
-        <DxPopup :show-title="true" :width="800" :height="475" title="其他信息" />
-        <DxForm>
-          <DxItem :col-count="2" :col-span="2" item-type="group">
-            <DxItem
-              :col-span="2"
-              data-field="sql"
-              editor-type="dxTextArea"
-              :editor-options="{ height: 180 }"
-            />
-            <DxItem
-              :col-span="2"
-              data-field="sqlParams"
-              editor-type="dxTextArea"
-              :editor-options="{ height: 180 }"
-            />
-          </DxItem>
-        </DxForm>
-      </DxEditing>
+      <DxPopup :show-title="true" :width="800" :height="475" title="其他信息" />
+      <DxForm>
+        <DxItem :col-count="2" :col-span="2" item-type="group">
+          <DxItem
+            :col-span="2"
+            data-field="sql"
+            editor-type="dxTextArea"
+            :editor-options="{ height: 180 }"
+          />
+          <DxItem
+            :col-span="2"
+            data-field="sqlParams"
+            editor-type="dxTextArea"
+            :editor-options="{ height: 180 }"
+          />
+        </DxItem>
+      </DxForm>
+    </DxEditing>
 
-      <DxColumn data-field="stackId" caption="追踪id" />
-      <DxColumn data-field="curdType" caption="Curd类型" />
-      <DxColumn data-field="tableName" caption="操作表" />
-      <DxColumn data-field="entityType" caption="实体类" />
-      <DxColumn data-field="sql" caption="sql语句" />
-      <DxColumn data-field="sqlParams" caption="sql参数" />
-      <DxColumn data-field="elapsedMilliseconds" caption="执行时间" />
-      <DxColumn data-field="success" caption="是否执行成功" />
-      <DxColumn data-field="executeResult" caption="执行结果" />
-      <DxColumn data-field="sqlException" caption="异常信息" />
-    </DxDataGrid>
+    <DxColumn data-field="stackId" caption="追踪id" />
+    <DxColumn data-field="curdType" caption="Curd类型" />
+    <DxColumn data-field="tableName" caption="操作表" />
+    <DxColumn data-field="entityType" caption="实体类" />
+    <DxColumn data-field="sql" caption="sql语句" />
+    <DxColumn data-field="sqlParams" caption="sql参数" />
+    <DxColumn data-field="elapsedMilliseconds" caption="执行时间" />
+    <DxColumn data-field="success" caption="是否执行成功" />
+    <DxColumn data-field="executeResult" caption="执行结果" />
+    <DxColumn data-field="sqlException" caption="异常信息" />
+  </DxDataGrid>
 </template>
 
 <script>
@@ -149,9 +149,6 @@ export default defineComponent({
       );
     }
     function onContentReady() {
-      document.querySelector(
-        '.dx-datagrid-headers .dx-datagrid-table .dx-header-row .dx-command-edit'
-      ).innerHTML = '操作';
     }
     onMounted(
       (window.onresize = function () {

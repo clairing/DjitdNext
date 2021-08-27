@@ -178,6 +178,7 @@ export default {
       const url = '/api/timer';
       dataSource.value = Ez.CreateStore({
         key: 'id',
+        loadParams: { tenantId: "c91c48134fc4f3403d78b62b294f1309" },
         loadUrl: `${url}/list`,
         insertUrl: `${url}/create-dev`,
         updateUrl: `${url}/update-dev`,

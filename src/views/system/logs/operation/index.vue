@@ -1,56 +1,56 @@
 <template>
-    <DxDataGrid
-      :data-source="dataSource"
-      ref="dataGrid"
-      :height="dgHeight"
-      :show-column-lines="true"
-      :show-row-lines="true"
-      :show-borders="true"
-      :row-alternation-enabled="true"
-      :focused-row-enabled="false"
-      :column-auto-width="true"
-      :column-hiding-enabled="false"
-      :column-fixing="{ enabled: true }"
-      :repaint-changes-only="true"
-      :grouping="{ autoExpandAll: true }"
-      :group-panel="{ visible: false }"
-      :scrolling="{
-        showScrollbar: 'always',
-        useNative: false,
-      }"
-      :column-resizing-mode="'widget'"
-      :selection="{ mode: 'single' }"
-      :remote-operations="{
-        paging: true,
-        filtering: true,
-        sorting: true,
-        grouping: true,
-        summary: true,
-        groupPaging: true,
-      }"
-      @content-ready="onContentReady"
-      @toolbar-preparing="onToolbarPreparing"
-    >
-      <DxPaging :page-size="pageNum" />
-      <DxPager :show-page-size-selector="true" :show-info="true" :allowed-page-sizes="pageSizes" />
-      <DxFilterRow :visible="true" />
+  <DxDataGrid
+    :data-source="dataSource"
+    ref="dataGrid"
+    :height="dgHeight"
+    :show-column-lines="true"
+    :show-row-lines="true"
+    :show-borders="true"
+    :row-alternation-enabled="true"
+    :focused-row-enabled="false"
+    :column-auto-width="true"
+    :column-hiding-enabled="false"
+    :column-fixing="{ enabled: true }"
+    :repaint-changes-only="true"
+    :grouping="{ autoExpandAll: true }"
+    :group-panel="{ visible: false }"
+    :scrolling="{
+      showScrollbar: 'always',
+      useNative: false,
+    }"
+    :column-resizing-mode="'widget'"
+    :selection="{ mode: 'single' }"
+    :remote-operations="{
+      paging: true,
+      filtering: true,
+      sorting: true,
+      grouping: true,
+      summary: true,
+      groupPaging: true,
+    }"
+    @content-ready="onContentReady"
+    @toolbar-preparing="onToolbarPreparing"
+  >
+    <DxPaging :page-size="pageNum" />
+    <DxPager :show-page-size-selector="true" :show-info="true" :allowed-page-sizes="pageSizes" />
+    <DxFilterRow :visible="true" />
 
-      <DxColumn data-field="name" caption="名称" />
-      <DxColumn data-field="success" caption="操作成功" data-type="boolean" />
-      <DxColumn data-field="message" caption="具体消息" />
-      <DxColumn data-field="ip" caption="IP" />
-      <DxColumn data-field="location" caption="地址" />
-      <DxColumn data-field="browser" caption="浏览器" />
-      <DxColumn data-field="os" caption="操作系统" />
-      <DxColumn data-field="url" caption="请求地址" />
-      <DxColumn data-field="className" caption="类名称" />
-      <DxColumn data-field="methodName" caption="方法名称" />
-      <DxColumn data-field="reqMethod" caption="请求方式" />
-      <DxColumn data-field="params" caption="请求参数" />
-      <DxColumn data-field="result" caption="返回结果" />
-      <DxColumn data-field="elapsedTime" caption="耗时" />
-      <DxColumn data-field="opTime" caption="操作时间" />
-    </DxDataGrid>
+    <DxColumn data-field="name" caption="名称" />
+    <DxColumn data-field="success" caption="操作成功" data-type="boolean" />
+    <DxColumn data-field="message" caption="具体消息" />
+    <DxColumn data-field="ip" caption="IP" />
+    <DxColumn data-field="location" caption="地址" />
+    <DxColumn data-field="browser" caption="浏览器" />
+    <DxColumn data-field="os" caption="操作系统" />
+    <!-- <DxColumn data-field="url" caption="请求地址" />
+    <DxColumn data-field="className" caption="类名称" />
+    <DxColumn data-field="methodName" caption="方法名称" />
+    <DxColumn data-field="reqMethod" caption="请求方式" />
+    <DxColumn data-field="params" caption="请求参数" />
+    <DxColumn data-field="result" caption="返回结果" />
+    <DxColumn data-field="elapsedTime" caption="耗时" />-->
+    <DxColumn data-field="opTime" caption="操作时间" data-type="date" format="yyyy-MM-dd HH:mm:ss" />
+  </DxDataGrid>
 </template>
 
 <script>
@@ -123,9 +123,7 @@ export default defineComponent({
       );
     }
     function onContentReady() {
-      document.querySelector(
-        '.dx-datagrid-headers .dx-datagrid-table .dx-header-row .dx-command-edit'
-      ).innerHTML = '操作';
+
     }
     onMounted(
       (window.onresize = function () {

@@ -10,7 +10,7 @@
           <Icon :icon="item.icon" :color="item.color" size="30" />
           <span class="ml-4 text-lg">{{ item.title }}</span>
         </span>
-        <div class="flex h-10 mt-2 text-secondary"> {{ item.desc }} </div>
+        <div class="flex h-10 mt-2 text-secondary">{{ item.desc }}</div>
         <div class="flex justify-between text-secondary">
           <span>{{ item.group }}</span>
           <span>{{ item.date }}</span>

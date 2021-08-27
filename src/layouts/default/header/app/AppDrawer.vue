@@ -4,13 +4,13 @@
     @register="registerDrawer"
     title="系统应用选择"
     @ok="handleSubmit"
-    width="320px"
+    :height="list.length * 60"
   >
     <div :class="`${prefixCls}__content`">
       <a-list>
         <a-row :gutter="16">
           <template v-for="item in list" :key="item.title">
-            <a-col :span="24">
+            <div class="md:w-1/3 lg:w-1/4 xs:w-1/2">
               <a-list-item>
                 <a-card :hoverable="true" :class="`${prefixCls}__card`">
                   <div :class="`${prefixCls}__card-title`">
@@ -22,7 +22,7 @@
                   >基于Vue Next, TypeScript, Ant Design Vue实现的一套完整的企业级后台管理系统</div>
                 </a-card>
               </a-list-item>
-            </a-col>
+            </div>
           </template>
         </a-row>
       </a-list>
@@ -49,7 +49,7 @@ export default defineComponent({
   emits: ['success'],
   setup(_, { emit }) {
     const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
-      setDrawerProps({ confirmLoading: false, placement: "left" });
+      setDrawerProps({ confirmLoading: false, placement: "top" });
       // 需要在setFieldsValue之前先填充treeData，否则Tree组件可能会报key not exist警告
       console.log(data)
     });

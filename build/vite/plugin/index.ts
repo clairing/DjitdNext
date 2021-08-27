@@ -5,9 +5,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import legacy from '@vitejs/plugin-legacy';
 
 import purgeIcons from 'vite-plugin-purge-icons';
-
 import windiCSS from 'vite-plugin-windicss';
-
 import { configHtmlPlugin } from './html';
 import { configPwaConfig } from './pwa';
 import { configMockPlugin } from './mock';
@@ -34,8 +32,10 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
     // have to
     vueJsx(),
   ];
+
   // vite-plugin-windicss
   vitePlugins.push(windiCSS());
+
   // TODO
   !isBuild && vitePlugins.push(configHmrPlugin());
 
